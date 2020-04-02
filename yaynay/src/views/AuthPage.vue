@@ -1,23 +1,35 @@
 <template>
   <div>
-    <h1>Log In</h1>
-    <form @submit.prevent="go">
-      <div>
-        <label>
-          <span>Email</span>
-          <input v-model="email" type="email" autocomplete="email" required />
-        </label>
-      </div>
-      <div>
+    <div class="logo">
+      <video width="320" height="240" autoplay>
+        <source src="@/assets/bercow.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="box">
+      <h1>Log In</h1>
+      <form @submit.prevent="go">
+        <div class="access">
           <label>
-              <span>Password</span>
-              <input v-model="password" type="password" autocomplete="current-password" required />
+            <span>Email</span>
+            <input v-model="email" type="email" autocomplete="email" required />
           </label>
-      </div>
-      <div>
-          <button type = "submit" class = "primary">Continue</button>
-      </div>
-    </form>
+        </div>
+        <div class="access">
+          <label>
+            <span>Password</span>
+            <input
+              v-model="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <button type="submit" class="primary">Continue</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -52,4 +64,55 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  text-align: center;
+}
+
+
+label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: right;
+  width: 400px;
+  line-height: 26px;
+  margin-bottom: 10px;
+  margin-left: 100px;
+}
+
+input {
+  height: 20px;
+  flex: 0 0 200px;
+  font-size: 12pt;
+  margin-left: 10px;
+}
+
+
+.primary {
+  display: inline-block;
+  background-color: lightgreen;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100px;
+  height: 40px;
+  font-size: 12px;
+  border-radius: 100px;
+}
+
+h1 {
+  padding: 10pt;
+}
+
+.box {
+  border: 2px solid;
+  border-radius: 5px;
+  margin-right: 300px;
+  margin-left: 300px;
+  border-color: #d9d9d9;
+}
+
+.access {
+  padding: 10pt;
+}
+</style>

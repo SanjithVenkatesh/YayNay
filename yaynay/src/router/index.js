@@ -23,39 +23,49 @@ async function isLoggedIn() {
 }
 
 const routes = [
-    {
+  {
+    path: "/",
+    components: {
+      authWrapper: () => import("../components/TheAuthWrapper.vue")
+    },
+    children: [
+      // {
+      //     path: "/reset",
+      //     component: () => import("../views/ResetPage.vue")
+      // },
+      {
         path: "/",
-        components: {
-            authWrapper: () => import("../components/TheAuthWrapper.vue")
-        },
-        children: [
-            // {
-            //     path: "/reset",
-            //     component: () => import("../views/ResetPage.vue")
-            // },
-            {
-                path: "/",
-                component: () => import("../views/AuthPage.vue"),
-                beforeEnter: (to,from,next) => {
-                    isLoggedIn().then(result => {
-                        if(result){
-                            next("/overview");
-                        }
-                        else{
-                            next();
-                        }
-                    })
-                }
+        component: () => import("../views/AuthPage.vue"),
+        beforeEnter: (to, from, next) => {
+          isLoggedIn().then(result => {
+            if (result) {
+              next("/overview");
+            } else {
+              next();
             }
-        ]
-    }
+          });
+        }
+      }
+    ]
+  },
+  {
+    path: "/",
+    components: {
+      basicWrapper: () => import("../components/TheBasicWrapper.vue"),
+      topBar: () => import("../components/TheTopBar.vue")
+    },
+    children: [
+      {
+        path: "/overview",
+        component: () => import("../views/HomePage.vue")
+      }
+    ]
+  }
 ];
 
 const router = new VueRouter({
-    mode: "history",
-    base: process.env.BASE_URL,
-    routes
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
 });
 export default router;
-
-

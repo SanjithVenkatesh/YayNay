@@ -34,3 +34,6 @@ Note that this app doesn’t need LeanCloud’s command line interface to run lo
 ## TODO
 1. Create home page with a top navigation bar that allows user to go onto user management page and to log-out.
 2. Start working on voting pages and changing views depening on user attributes. 
+
+## Gratitude
+Special thanks to [Fuchen Shi](https://github.com/shifuchen98/) for the basis of this Readme as well as the basic design of this website.

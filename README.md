@@ -4,7 +4,9 @@
 YayNay is a simple voting app for organizations to hold votes during meetings. It will allow the chairperson to set up votes and allow their members to vote and see the results in real-time. The system will also keep track of all of the votes done in the past. Currently, the main voting method will be a simple yay, nay, or abstain voting but in the future, more voting methods such as STV or D'Hondt will be available for larger elections.
 
 ## Current Abilities
-1. Logging in and seeing a blank home page. :man_shrugging:
+1. Logging in.
+2. Can add new organizations to the databsae, just can't see them yet.
+3. Log out from the home page. 
 
 ## Dependencies
 1. [LeanCloud](leancloud.app) for object storage, web hosting, and cloud functions. Note that while we’re using the Developer Plan of LeanCloud (which is free), the cloud can only handle 30,000 requests per day. However, this is totally sufficient for the purpose of this app.

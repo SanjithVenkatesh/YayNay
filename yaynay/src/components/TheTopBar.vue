@@ -1,30 +1,6 @@
 <template>
   <nav>
-    <ul id="left"></ul>
-    <ul id="right">
-      <li :class="[$store.state.openedTopNavItem === 'user' ? 'open' : '']">
-        <button @click.stop="$store.commit('updateOpenedTopNavItem', 'user')">
-          <span id="right__name">{{ fullName }}</span>
-        </button>
-        <ul class="dialogue">
-          <li>
-            <router-link :to="'/settings'">
-              <span>Settings</span>
-            </router-link>
-          </li>
-          <li v-if="allowAddingNewUsers">
-            <router-link :to="'/users'">
-              <span>Manage Users</span>
-            </router-link>
-          </li>
-          <li>
-            <button @click="logOut">
-              <span>Log out</span>
-            </button>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    
   </nav>
 </template>
 

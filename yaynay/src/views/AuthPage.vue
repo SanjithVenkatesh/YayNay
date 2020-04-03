@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="logo">
-      <video width="320" height="240" autoplay>
+      <video width="320" height="240" playsinline autoplay muted loop>
         <source src="@/assets/bercow.mp4" type="video/mp4" />
       </video>
     </div>
@@ -30,6 +30,12 @@
         </div>
       </form>
     </div>
+    <div class="crypto">
+      <p>Support this website</p>
+      <p>BTC: {{btc}}</p>
+      <p>ETH: {{eth}}</p>
+      <p>LTC: {{ltc}}</p>
+    </div>
   </div>
 </template>
 
@@ -40,7 +46,10 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      ltc: "M9UTd2i2tSPPesQ8kevN8RsWGV4u9iPd8F",
+      btc: "3LZqJP5gDRSfuxkvw8FWPbrWeC2WJ5an4J",
+      eth: "0x3db1f8aF0C438E5768eA3967f70138F9387DB449"
     };
   },
   methods: {
@@ -69,7 +78,6 @@ export default {
   text-align: center;
 }
 
-
 label {
   display: flex;
   flex-direction: row;
@@ -88,7 +96,6 @@ input {
   margin-left: 10px;
 }
 
-
 .primary {
   display: inline-block;
   background-color: lightgreen;
@@ -98,6 +105,16 @@ input {
   height: 40px;
   font-size: 12px;
   border-radius: 100px;
+}
+
+.crypto{
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 300px;
+  margin-right: 300px;
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: gold;
 }
 
 h1 {

@@ -37,4 +37,8 @@ h1 {
   font-weight: 600;
   font-size: 18pt;
 }
+
+body{
+  margin: 0px;
+}
 </style>

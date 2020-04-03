@@ -1,23 +1,33 @@
 <template>
   <div>
     <h1>Hi</h1>
-    <button type="logOut" class="primary" v-on:click="logOut">Log Out</button>
+    <button v-on:click="addOrg = true">Add Organization</button>
+    <div v-if = "addOrg">
+      <CreateNewOrganization/>
+    </div>
   </div>
 </template>
 
 <script>
-import AV from "leancloud-storage";
+// import AV from "leancloud-storage";
+import CreateNewOrganization from "@/components/CreateNewOrganization.vue";
 export default {
   name: "HomePage",
-  components: {},
-  created(){},
+  components: {
+    CreateNewOrganization
+  },
+  data(){
+    return{
+      addOrg: false,
+      name: "",
+      organizations: [],
+      meetings:[],
+      votes: []
+    };
+  },
+  created(){
+  },
   methods: {
-    logOut(){
-      console.log("Logging out");
-      const vm = this;
-      AV.User.logOut();
-      vm.$router.push("/");
-    }
   }
 }
 </script>

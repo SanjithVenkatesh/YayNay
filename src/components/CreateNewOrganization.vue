@@ -1,10 +1,10 @@
 <template>
   <div>
     <h1>Create New Organization</h1>
-    <form @submit="createNewOrganization">
+    <form @submit.prevent="createNewOrganization">
       <span>Organization Name</span>
-      <input v-model="newOrganiationName" type="text" required />
-      <button v-on:click="createNewOrganization">Add</button>
+      <input v-model="newOrganizationName" type="text" required />
+      <button type="submit">Add</button>
     </form>
   </div>
 </template>
@@ -13,22 +13,24 @@
 import AV from "leancloud-storage";
 export default {
   name: "CreateNewOrganization",
+  props: {
+    callback: Function
+  },
   data() {
     return {
-      newOrganiationName: ""
+      newOrganizationName: ""
     };
   },
   methods: {
     createNewOrganization() {
       console.log("hi");
       const vm = this;
-      const organizations = AV.Object.extend("Organization");
-      var newOrg = new organizations();
-      newOrg.set("name", vm.newOrganiationName);
+      var newOrg = new AV.Object("Organizations");
+      newOrg.set("name", vm.newOrganizationName);
       newOrg.set("createdBy", AV.User.current());
       newOrg.save().then(
         function() {
-          vm.$router.push("/overview");
+          vm.callback();
         },
         function(error) {
           alert(error);

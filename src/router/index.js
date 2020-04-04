@@ -30,8 +30,8 @@ const routes = [
     },
     children: [
       // {
-      //     path: "/reset",
-      //     component: () => import("../views/ResetPage.vue")
+      //     path: "/addUser",
+      //     component: () => import("../views/AddUser.vue")
       // },
       {
         path: "/",

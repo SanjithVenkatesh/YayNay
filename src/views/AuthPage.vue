@@ -30,6 +30,12 @@
         </div>
       </form>
     </div>
+    <div class = "registerUser" v-if="!addUser">
+      <button v-on:click="addUser=true">Register New User</button>
+    </div>
+    <div v-if="addUser">
+      <AddUser :callback="callback"/>
+    </div>
     <div class="crypto">
       <p>Support this website</p>
       <p>BTC: {{btc}}</p>
@@ -41,15 +47,20 @@
 
 <script>
 import AV from "leancloud-storage";
+import AddUser from "@/components/AddUser.vue";
 export default {
   name: "AuthPage",
+  components: {
+    AddUser
+  },
   data() {
     return {
       email: "",
       password: "",
       ltc: "M9UTd2i2tSPPesQ8kevN8RsWGV4u9iPd8F",
       btc: "3LZqJP5gDRSfuxkvw8FWPbrWeC2WJ5an4J",
-      eth: "0x3db1f8aF0C438E5768eA3967f70138F9387DB449"
+      eth: "0x3db1f8aF0C438E5768eA3967f70138F9387DB449",
+      addUser: false
     };
   },
   methods: {
@@ -68,6 +79,10 @@ export default {
             alert(error);
           }
         });
+    },
+    callback(){
+      const vm = this;
+      vm.addUser=false;
     }
   }
 };

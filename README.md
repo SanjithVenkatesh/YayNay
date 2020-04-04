@@ -10,12 +10,14 @@ YayNay is a simple voting app for organizations to hold votes during meetings. I
 2. Can add new organizations to the databsae, just can't see them yet.
 3. Log out from the home page. 
 4. Register new users.
+5. Random John Bercow quotes will appear at the bottom because why not. :man-shrugging:
 
 ## Dependencies
 1. [LeanCloud](leancloud.app) for object storage, web hosting, and cloud functions. Note that while we’re using the Developer Plan of LeanCloud (which is free), the cloud can only handle 30,000 requests per day. However, this is totally sufficient for the purpose of this app.
 2. [Vue.js](vuejs.org) as the front-end framework.
 3. [Vue Router](router.vuejs.org) for crunching multiple views into a single-page app.
 4. [Vuex](vuex.vuejs.org) for managing global states.
+5. [math.js](https://mathjs.org/) for basic math functions such as rounding and random numbers.
 5. [Font-Awesome](fontawesome.com) for icons.
 
 ## Setting up Development Environment

@@ -53,7 +53,7 @@ const routes = [
     components: {
       basicWrapper: () => import("../components/TheBasicWrapper.vue"),
       topBar: () => import("../components/TheTopBar.vue"),
-      bercowQuote: () => import("../components/BercowQuote.vue")
+      bercowQuote: () => import("@/components/BercowQuote.vue")
     },
     children: [
       {

@@ -7,16 +7,21 @@
     <div v-if="addOrg">
       <CreateNewOrganization :callback="callback"/>
     </div>
+    <div>
+      <BercowQuote></BercowQuote>
+    </div>
   </div>
 </template>
 
 <script>
 // import AV from "leancloud-storage";
 import CreateNewOrganization from "@/components/CreateNewOrganization.vue";
+import BercowQuote from "@/components/BercowQuote.vue";
 export default {
   name: "HomePage",
   components: {
-    CreateNewOrganization
+    CreateNewOrganization,
+    BercowQuote
   },
   data() {
     return {

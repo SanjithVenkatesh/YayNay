@@ -42,16 +42,21 @@
       <p>ETH: {{eth}}</p>
       <p>LTC: {{ltc}}</p>
     </div>
+    <div>
+      <BercowQuote></BercowQuote>
+    </div>
   </div>
 </template>
 
 <script>
 import AV from "leancloud-storage";
 import AddUser from "@/components/AddUser.vue";
+import BercowQuote from "@/components/BercowQuote.vue";
 export default {
   name: "AuthPage",
   components: {
-    AddUser
+    AddUser,
+    BercowQuote
   },
   data() {
     return {

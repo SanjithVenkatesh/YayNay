@@ -7,16 +7,14 @@
       <router-view name="authWrapper" class="auth-wrapper"></router-view>
       <router-view name="basicWrapper" class="basic-wrapper"></router-view>
     </transition>
-    <BercowQuote/>
   </div>
 </template>
 
 <script>
-import BercowQuote from "../components/BercowQuote.vue";
+
 export default {
   name: "App",
   components: {
-    BercowQuote
   }
 };
 </script>

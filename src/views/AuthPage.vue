@@ -31,7 +31,7 @@
       </form>
     </div>
     <div class = "registerUser" v-if="!addUser">
-      <button v-on:click="addUser=true">Register New User</button>
+      <button v-on:click="addUser=true" class="primaryRed">Register New User</button>
     </div>
     <div v-if="addUser">
       <AddUser :callback="callback"/>
@@ -114,6 +114,17 @@ input {
 .primary {
   display: inline-block;
   background-color: lightgreen;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100px;
+  height: 40px;
+  font-size: 12px;
+  border-radius: 100px;
+}
+
+.primaryRed{
+  display: inline-block;
+  background-color: lightsalmon;
   margin-bottom: 20px;
   margin-top: 20px;
   width: 100px;

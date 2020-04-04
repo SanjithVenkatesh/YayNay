@@ -7,6 +7,7 @@ YayNay is a simple voting app for organizations to hold votes during meetings. I
 1. Logging in.
 2. Can add new organizations to the databsae, just can't see them yet.
 3. Log out from the home page. 
+4. Register new users.
 
 ## Dependencies
 1. [LeanCloud](leancloud.app) for object storage, web hosting, and cloud functions. Note that while we’re using the Developer Plan of LeanCloud (which is free), the cloud can only handle 30,000 requests per day. However, this is totally sufficient for the purpose of this app.

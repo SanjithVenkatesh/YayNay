@@ -1,0 +1,97 @@
+<template>
+  <div>
+    <form @submit.prevent="addQuestion">
+      <div class="questionInput">
+        <label>
+          <span>Question</span>
+          <input v-model="question" type="text" required />
+        </label>
+      </div>
+      <div class="passwordProtected">
+        <p>
+          Password Protected?
+          <input type="checkbox" v-model="password" />
+        </p>
+        <div v-if="password" class="addQuestion">
+          <label>
+            <span>Enter Password</span>
+            <input v-model="qPassword" type="password" />
+          </label>
+        </div>
+      </div>
+      <div class="requireName">
+        <p>
+          Require Name?
+          <input type="checkbox" v-model="requireName" />
+        </p>
+      </div>
+      <div class="adminPassword">
+        <p>
+          Add Admin Password?
+          <input type="checkbox" v-model="adminPassword" />
+        </p>
+        <div v-if="adminPassword" class="adminPassword">
+          <label>
+            <span>Enter Admin Password</span>
+            <input v-model="aPassword" type="password" />
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="primary">Add Question</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import AV from "leancloud-storage";
+export default {
+  name: "CreateQuestion",
+  data() {
+    return {
+      question: "",
+      password: false,
+      qPassword: "",
+      requireName: false,
+      adminPassword: false,
+      aPassword: "",
+    };
+  },
+  methods: {
+    addQuestion() {
+      const vm = this;
+      if (vm.password == false && vm.qPassword != "") {
+        vm.qPassword = "";
+      }
+      if (vm.adminPassword == false && vm.aPassword != "") {
+        vm.aPassword = "";
+      }
+      if (
+        vm.adminPassword == true &&
+        vm.password == true &&
+        vm.adminPassword == vm.qPassword
+      ) {
+        alert("Admin password and question password cannot be the same");
+        return;
+      }
+      var newQuestion = new AV.Object("Question");
+      newQuestion.set("question", vm.question);
+      newQuestion.set("requireName", vm.requireName);
+      newQuestion.set("password", vm.qPassword);
+      newQuestion.set("adminPassword", vm.aPassword);
+      newQuestion.set("passwordProtected", vm.password);
+      newQuestion.set("adminPasswordRequired", vm.adminPassword);
+      newQuestion.save().then(
+        function(newQuestion) {
+          alert("Object saved. objectId: " + newQuestion.id);
+          vm.$router.push("/" + newQuestion.id);
+        },
+        function(error) {
+          alert(error);
+        }
+      );
+    },
+  },
+};
+</script>
+
+<style scoped></style>

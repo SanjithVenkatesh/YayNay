@@ -1,9 +1,7 @@
 <template>
   <div>
     <h1>Hi</h1>
-    <div>
-      <CreateQuestion></CreateQuestion>
-    </div>
+    <h2>{{id}}</h2>
     <div>
       <BercowQuote></BercowQuote>
     </div>
@@ -14,27 +12,24 @@
 // import AV from "leancloud-storage";
 // import CreateNewOrganization from "@/components/CreateNewOrganization.vue";
 import BercowQuote from "@/components/BercowQuote.vue";
-import CreateQuestion from "../components/CreateQuestion.vue";
+// import VoteCard from "../components/VoteCard.vue";
 export default {
-  name: "HomePage",
+  name: "VotingPage",
   components: {
-    BercowQuote,
-    CreateQuestion
+    BercowQuote
+    // VoteCard
   },
   data() {
     return {
-      addOrg: false,
-      name: "",
-      organizations: [],
-      meetings: [],
-      votes: []
+        id: ""
     };
   },
-  created() {},
+  created() {
+      const vm = this;
+      vm.id = vm.$route.params.id;
+  },
   methods: {
     callback(){
-      const vm = this;
-      vm.addOrg = false;
     }
   }
 };

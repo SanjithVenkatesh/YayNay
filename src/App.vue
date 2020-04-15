@@ -4,7 +4,7 @@
       <router-view name="topBar" class="top-nav"></router-view>
     </transition>
     <transition name="page-wrapper">
-      <router-view name="authWrapper" class="auth-wrapper"></router-view>
+      <!-- <router-view name="authWrapper" class="auth-wrapper"></router-view> -->
       <router-view name="basicWrapper" class="basic-wrapper"></router-view>
     </transition>
   </div>

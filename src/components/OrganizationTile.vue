@@ -14,7 +14,9 @@ export default {
           orgCreator: "",
       };
   },
-  created() {},
+  created() {
+      const orgQuery = AV.Query("Organizations");
+  },
   methods: {}
 };
 </script>

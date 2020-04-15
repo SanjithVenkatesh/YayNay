@@ -43,5 +43,6 @@ p {
   margin-right: 200px;
   padding-top: 50px;
   padding-bottom: 10px;
+  text-align: center;
 }
 </style>

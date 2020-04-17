@@ -9,8 +9,9 @@ YayNay is a simple voting app for organizations to hold votes during meetings. I
 Decided to get rid of any user system on the platform and decided it to be more question based like When2Meet.
 
 ## Current Abilities
-1. Create question and will take user to a blank Question page to vote. 
-2. Random John Bercow quotes will appear at the bottom because why not. :man-shrugging:
+1. Create question and place a password on questions before answering.
+2. Vote on the questions and see who has voted how.
+3. Random John Bercow quotes will appear at the bottom because why not. :man-shrugging:
 
 ## Dependencies
 1. [LeanCloud](leancloud.app) for object storage, web hosting, and cloud functions. Note that while we’re using the Developer Plan of LeanCloud (which is free), the cloud can only handle 30,000 requests per day. However, this is totally sufficient for the purpose of this app.
@@ -39,7 +40,7 @@ Note that this app doesn’t need LeanCloud’s command line interface to run lo
 
 
 ## TODO
-1. Start working on voting pages and changing views depending on user attributes. 
+1. Add some constraint on the voting component. 
 
 ## Gratitude
 Special thanks to [Fuchen Shi](https://github.com/shifuchen98/) for the basis of this Readme as well as the basic design of this website.

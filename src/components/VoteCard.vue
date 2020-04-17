@@ -3,17 +3,22 @@
     <h2>{{ questionText }}</h2>
     <div class="wholeScreen">
       <section class="voting">
-        <div class="giveName" v-if="!showVotingOptions">
-          <form @submit.prevent="startVoting">
-            <h3>Vote Requires Your Name</h3>
-            <input v-model="name" type="text" required />
-            <button type="submit">Enter Name</button>
-          </form>
+        <div v-if="validVoting">
+          <div class="giveName" v-if="!showVotingOptions">
+            <form @submit.prevent="startVoting">
+              <h3>Vote Requires Your Name</h3>
+              <input v-model="name" type="text" required />
+              <button type="submit">Enter Name</button>
+            </form>
+          </div>
+          <div class="voteOptions" v-if="showVotingOptions">
+            <button @click="votedYay">Yay</button>
+            <button v-on:click="votedNay">Nay</button>
+            <button v-on:click="votedAbstain">Abstain</button>
+          </div>
         </div>
-        <div class="voteOptions" v-if="showVotingOptions">
-          <button @click="votedYay">Yay</button>
-          <button v-on:click="votedNay">Nay</button>
-          <button v-on:click="votedAbstain">Abstain</button>
+        <div v-if="!validVoting">
+            <p>Thank you for voting. Your vote has already been casted.</p>
         </div>
       </section>
       <section class="voteCount">
@@ -64,6 +69,7 @@ export default {
       name: "",
       showVotingOptions: false,
       password: "",
+      validVoting: true,
     };
   },
   created() {
@@ -176,6 +182,10 @@ export default {
       const vm = this;
       vm.showVotingOptions = true;
       console.log(vm.name);
+      console.log(vm.yayNames.includes(vm.name));
+      if(vm.yayNames.includes(vm.name) == true || vm.nayNames.includes(vm.name) == true || vm.abstainNames.includes(vm.name) == true){
+          vm.validVoting = false;
+      }
     },
   },
 };
@@ -185,16 +195,16 @@ export default {
 .wholeScreen {
   order: 1;
   width: auto;
-  height: 1000px;
-  background-color: lightblue;
   display: flex;
 }
 
 .voteCount {
+  margin-left: 350px;
   text-decoration: underline;
   text-align-last: justify;
   display: block;
   width: auto;
+  text-justify: center;
 }
 
 button {

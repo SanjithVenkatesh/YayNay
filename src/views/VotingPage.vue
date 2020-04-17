@@ -1,9 +1,7 @@
 <template>
   <div>
-    <h1>Hi</h1>
-    <h2>{{id}}</h2>
     <div>
-        <VoteCard :questionId="id"></VoteCard>
+      <VoteCard :questionId="id"></VoteCard>
     </div>
     <div>
       <BercowQuote></BercowQuote>
@@ -20,22 +18,26 @@ export default {
   name: "VotingPage",
   components: {
     BercowQuote,
-    VoteCard
+    VoteCard,
   },
   data() {
     return {
-        id: ""
+      id: "",
     };
   },
   created() {
-      const vm = this;
-      vm.id = vm.$route.params.id;
+    const vm = this;
+    vm.id = vm.$route.params.id;
   },
   methods: {
-    callback(){
-    }
-  }
+    callback() {},
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+*{
+  margin-top: 100px;
+  margin-left: 100px;
+}
+</style>

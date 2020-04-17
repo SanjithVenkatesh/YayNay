@@ -2,6 +2,7 @@
   <div>
     <nav>
       <button type="logOut" class="primary" v-on:click="logOut">Create New Question</button>
+      <button type="logOut" class="primary" v-on:click="about">About</button>
     </nav>
   </div>
 </template>
@@ -15,10 +16,12 @@ export default {
   },
   methods: {
     logOut() {
-      console.log("Logging out");
       const vm = this;
-      // AV.User.logOut();
       vm.$router.push("/");
+    },
+    about() {
+      const vm = this;
+      vm.$router.push("/about");
     }
   }
 };
@@ -26,8 +29,9 @@ export default {
 
 <style scoped>
 * {
-  text-align: right;
+  text-align: left;
   background-color: lightgrey;
+  display: flex;
 }
 
 button{

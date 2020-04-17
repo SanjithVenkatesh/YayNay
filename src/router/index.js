@@ -1,53 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import AV from "leancloud-storage";
 
 Vue.use(VueRouter);
 
-// async function isLoggedIn() {
-//   try {
-//     const user = AV.User.current();
-//     if (user) {
-//       const result = await user.isAuthenticated();
-//       if (result) {
-//         await user.fetch();
-//       } else {
-//         await AV.User.logOut();
-//       }
-//       return result;
-//     }
-//     return false;
-//   } catch (error) {
-//     alert(error);
-//   }
-// }
-
 const routes = [
-  // {
-  //   path: "/",
-  //   components: {
-  //     authWrapper: () => import("../components/TheAuthWrapper.vue")
-  //   },
-  //   children: [
-  //     // {
-  //     //     path: "/addUser",
-  //     //     component: () => import("../views/AddUser.vue")
-  //     // },
-  //     {
-  //       path: "/",
-  //       component: () => import("../views/AuthPage.vue"),
-  //       beforeEnter: (to, from, next) => {
-  //         isLoggedIn().then(result => {
-  //           if (result) {
-  //             next("/overview");
-  //           } else {
-  //             next();
-  //           }
-  //         });
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: "/",
     components: {
@@ -61,11 +17,15 @@ const routes = [
         component: () => import("../views/HomePage.vue")
       },
       {
+        path: "/about",
+        component: () => import("../views/AboutPage.vue")
+      },
+      {
         path: "/:id",
         component: () =>import("../views/VotingPage.vue")
       }
     ]
-  }
+  } 
 ];
 
 const router = new VueRouter({

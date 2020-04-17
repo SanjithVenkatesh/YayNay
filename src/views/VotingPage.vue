@@ -3,6 +3,9 @@
     <h1>Hi</h1>
     <h2>{{id}}</h2>
     <div>
+        <VoteCard :questionId="id"></VoteCard>
+    </div>
+    <div>
       <BercowQuote></BercowQuote>
     </div>
   </div>
@@ -12,12 +15,12 @@
 // import AV from "leancloud-storage";
 // import CreateNewOrganization from "@/components/CreateNewOrganization.vue";
 import BercowQuote from "@/components/BercowQuote.vue";
-// import VoteCard from "../components/VoteCard.vue";
+import VoteCard from "../components/VoteCard.vue";
 export default {
   name: "VotingPage",
   components: {
-    BercowQuote
-    // VoteCard
+    BercowQuote,
+    VoteCard
   },
   data() {
     return {

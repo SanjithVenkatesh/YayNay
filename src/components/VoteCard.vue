@@ -3,22 +3,31 @@
     <h2>{{ questionText }}</h2>
     <div class="wholeScreen">
       <section class="voting">
-        <div v-if="validVoting">
-          <div class="giveName" v-if="!showVotingOptions">
-            <form @submit.prevent="startVoting">
-              <h3>Vote Requires Your Name</h3>
-              <input v-model="name" type="text" required />
-              <button type="submit">Enter Name</button>
-            </form>
-          </div>
-          <div class="voteOptions" v-if="showVotingOptions">
-            <button @click="votedYay">Yay</button>
-            <button v-on:click="votedNay">Nay</button>
-            <button v-on:click="votedAbstain">Abstain</button>
-          </div>
+        <div v-if="needPassword">
+          <form @submit.prevent="checkPassword">
+            <h3>Vote Requires Password</h3>
+            <input v-model="enteredPassword" type="password" required />
+            <button type="submit">Submit Password</button>
+          </form>
         </div>
-        <div v-if="!validVoting">
+        <div v-if="!needPassword">
+          <div v-if="validVoting">
+            <div class="giveName" v-if="!showVotingOptions">
+              <form @submit.prevent="startVoting">
+                <h3>Vote Requires Your Name</h3>
+                <input v-model="name" type="text" required />
+                <button type="submit">Enter Name</button>
+              </form>
+            </div>
+            <div class="voteOptions" v-if="showVotingOptions">
+              <button @click="votedYay">Yay</button>
+              <button v-on:click="votedNay">Nay</button>
+              <button v-on:click="votedAbstain">Abstain</button>
+            </div>
+          </div>
+          <div v-if="!validVoting">
             <p>Thank you for voting. Your vote has already been casted.</p>
+          </div>
         </div>
       </section>
       <section class="voteCount">
@@ -70,17 +79,22 @@ export default {
       showVotingOptions: false,
       password: "",
       validVoting: true,
+      needPassword: false,
+      enteredPassword: "",
     };
   },
   created() {
     const vm = this;
     var questionQuery = new AV.Query("Question");
     questionQuery.get(vm.questionId).then(function(question) {
+      console.log(question.toJSON());
       vm.questionText = question.get("question");
       vm.requireName = question.get("requireName");
       vm.requirePassword = question.get("passwordProtected");
+      vm.needPassword = vm.requirePassword;
       vm.requireAdminPassword = question.get("adminPasswordRequired");
       vm.password = question.get("password");
+      console.log(vm.password);
     });
     vm.getVoteCount();
   },
@@ -130,6 +144,7 @@ export default {
         function(yr) {
           alert("Your vote has been recorded: " + yr.id);
           vm.getVoteCount();
+          vm.validVoting = false;
         },
         function(error) {
           alert(error);
@@ -151,6 +166,7 @@ export default {
         function(nr) {
           alert("Your vote has been recorded: " + nr.id);
           vm.getVoteCount();
+          vm.validVoting = false;
         },
         function(error) {
           alert(error);
@@ -172,6 +188,7 @@ export default {
         function(ar) {
           alert("Your vote has been recorded: " + ar.id);
           vm.getVoteCount();
+          vm.validVoting = false;
         },
         function(error) {
           alert(error);
@@ -183,8 +200,19 @@ export default {
       vm.showVotingOptions = true;
       console.log(vm.name);
       console.log(vm.yayNames.includes(vm.name));
-      if(vm.yayNames.includes(vm.name) == true || vm.nayNames.includes(vm.name) == true || vm.abstainNames.includes(vm.name) == true){
-          vm.validVoting = false;
+      if (
+        vm.yayNames.includes(vm.name) == true ||
+        vm.nayNames.includes(vm.name) == true ||
+        vm.abstainNames.includes(vm.name) == true
+      ) {
+        vm.validVoting = false;
+      }
+    },
+    checkPassword() {
+      const vm = this;
+      console.log(vm.enteredPassword);
+      if (vm.password == vm.enteredPassword) {
+        vm.needPassword = false;
       }
     },
   },

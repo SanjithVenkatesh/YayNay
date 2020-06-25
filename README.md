@@ -5,8 +5,8 @@
 ## Introduction
 YayNay is a simple voting app for organizations to hold votes during meetings. It will allow the chairperson to set up votes and allow their members to vote and see the results in real-time. The system will also keep track of all of the votes done in the past. Currently, the main voting method will be a simple yay, nay, or abstain voting but in the future, more voting methods such as STV or D'Hondt will be available for larger elections.
 
-## Update(April 15, 2020)
-Decided to get rid of any user system on the platform and decided it to be more question based like When2Meet.
+## Update(June 25, 2020)
+First version has been deployed onto LeanCloud.
 
 ## Current Abilities
 1. Create question and place a password on questions before answering.

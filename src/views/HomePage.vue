@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Hi</h1>
     <div>
       <CreateQuestion></CreateQuestion>
     </div>
@@ -32,7 +31,7 @@ export default {
   },
   created() {},
   methods: {
-    callback(){
+    callback() {
       const vm = this;
       vm.addOrg = false;
     }

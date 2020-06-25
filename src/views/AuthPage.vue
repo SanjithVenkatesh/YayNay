@@ -30,17 +30,19 @@
         </div>
       </form>
     </div>
-    <div class = "registerUser" v-if="!addUser">
-      <button v-on:click="addUser=true" class="primaryRed">Register New User</button>
+    <div class="registerUser" v-if="!addUser">
+      <button v-on:click="addUser = true" class="primaryRed">
+        Register New User
+      </button>
     </div>
     <div v-if="addUser">
-      <AddUser :callback="callback"/>
+      <AddUser :callback="callback" />
     </div>
     <div class="crypto">
       <p>Support this website</p>
-      <p>BTC: {{btc}}</p>
-      <p>ETH: {{eth}}</p>
-      <p>LTC: {{ltc}}</p>
+      <p>BTC: {{ btc }}</p>
+      <p>ETH: {{ eth }}</p>
+      <p>LTC: {{ ltc }}</p>
     </div>
     <div>
       <BercowQuote></BercowQuote>
@@ -85,9 +87,9 @@ export default {
           }
         });
     },
-    callback(){
+    callback() {
       const vm = this;
-      vm.addUser=false;
+      vm.addUser = false;
     }
   }
 };
@@ -127,7 +129,7 @@ input {
   border-radius: 100px;
 }
 
-.primaryRed{
+.primaryRed {
   display: inline-block;
   background-color: lightsalmon;
   margin-bottom: 20px;
@@ -138,7 +140,7 @@ input {
   border-radius: 100px;
 }
 
-.crypto{
+.crypto {
   text-align: center;
   margin-top: 10px;
   margin-left: 300px;

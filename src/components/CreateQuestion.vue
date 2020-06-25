@@ -1,21 +1,22 @@
 <template>
   <div>
     <form @submit.prevent="addQuestion">
-      <div class="questionInput">
+      <span>Question</span>
+      <div>
         <label>
-          <span>Question</span>
-          <input v-model="question" type="text" required />
+          <input id="questionInput" v-model="question" type="text" required />
         </label>
       </div>
+
       <div class="passwordProtected">
         <p>
           Password Protected?
           <input type="checkbox" v-model="password" />
         </p>
         <div v-if="password" class="addQuestion">
+          <span>Enter Password</span>
           <label>
-            <span>Enter Password</span>
-            <input v-model="qPassword" type="password" />
+            <input id="questionInput" v-model="qPassword" type="password" />
           </label>
         </div>
       </div>
@@ -33,7 +34,7 @@
         <div v-if="adminPassword" class="adminPassword">
           <label>
             <span>Enter Admin Password</span>
-            <input v-model="aPassword" type="password" />
+            <input id="questionInput" v-model="aPassword" type="password" />
           </label>
         </div>
       </div>
@@ -53,7 +54,7 @@ export default {
       qPassword: "",
       requireName: false,
       adminPassword: false,
-      aPassword: "",
+      aPassword: ""
     };
   },
   methods: {
@@ -89,9 +90,26 @@ export default {
           alert(error);
         }
       );
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  text-align: center;
+}
+
+input#questionInput {
+  width: 300px;
+  height: 30px;
+  margin: 10px;
+  font-size: 18px;
+}
+
+.primary {
+  width: 70px;
+  height: 50px;
+  margin-top: 25px;
+}
+</style>

@@ -11,28 +11,19 @@
 </template>
 
 <script>
-
 export default {
   name: "App",
-  components: {
-  }
+  components: {}
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
 * {
   font-family: "avenir next", sans-serif;
   font-weight: 400;
-  background-color: lightblue;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+  margin-left: 0px;
 }
 
 h1 {
@@ -40,7 +31,7 @@ h1 {
   font-size: 18pt;
 }
 
-body{
+body {
   margin: 0px;
 }
 </style>

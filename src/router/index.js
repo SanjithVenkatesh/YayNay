@@ -22,10 +22,10 @@ const routes = [
       },
       {
         path: "/:id",
-        component: () =>import("../views/VotingPage.vue")
+        component: () => import("../views/VotingPage.vue")
       }
     ]
-  } 
+  }
 ];
 
 const router = new VueRouter({

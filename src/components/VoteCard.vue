@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h2>{{ questionText }}</h2>
+    <div class="titleLine">
+      <h2>{{ questionText }}</h2>
+      <button type="button" v-clipboard:copy="toCopy">
+        Share Link
+      </button>
+    </div>
     <div class="wholeScreen">
       <section class="voting">
         <div v-if="needPassword">
@@ -13,16 +18,28 @@
         <div v-if="!needPassword">
           <div v-if="validVoting">
             <div class="giveName" v-if="!showVotingOptions">
-              <form @submit.prevent="startVoting">
+              <form @submit.prevent="startVoting" v-if="requireName">
                 <h3>Vote Requires Your Name</h3>
                 <input v-model="name" type="text" required />
-                <button type="submit">Enter Name</button>
+                <button type="submit" class="primary">Enter Name</button>
               </form>
             </div>
             <div class="voteOptions" v-if="showVotingOptions">
-              <button @click="votedYay">Yay</button>
-              <button v-on:click="votedNay">Nay</button>
-              <button v-on:click="votedAbstain">Abstain</button>
+              <button
+                class="primary"
+                style="background-color: #36c25b;border-color:#36c25b "
+                @click="votedYay"
+              >
+                Yay
+              </button>
+              <button
+                class="primary"
+                style="background-color: #cf3027;border-color:#cf3027 "
+                v-on:click="votedNay"
+              >
+                Nay
+              </button>
+              <button class="primary" v-on:click="votedAbstain">Abstain</button>
             </div>
           </div>
           <div v-if="!validVoting">
@@ -31,19 +48,19 @@
         </div>
       </section>
       <section class="voteCount">
-        <h1>Yay {{ yay }}</h1>
+        <h1 class="title">Yay {{ yay }}</h1>
         <ul id="yayNames">
           <li v-for="name in yayNames" :key="name.id">
             {{ name }}
           </li>
         </ul>
-        <h1>Nay {{ nay }}</h1>
+        <h1 class="title">Nay {{ nay }}</h1>
         <ul id="yayNames">
           <li v-for="name in nayNames" :key="name.id">
             {{ name }}
           </li>
         </ul>
-        <h1>Abstain {{ abstain }}</h1>
+        <h1 class="title">Abstain {{ abstain }}</h1>
         <ul id="yayNames">
           <li v-for="name in abstainNames" :key="name.id">
             {{ name }}
@@ -81,21 +98,26 @@ export default {
       validVoting: true,
       needPassword: false,
       enteredPassword: "",
+      toCopy: "",
     };
   },
   created() {
     const vm = this;
     var questionQuery = new AV.Query("Question");
     questionQuery.get(vm.questionId).then(function(question) {
-      console.log(question.toJSON());
       vm.questionText = question.get("question");
       vm.requireName = question.get("requireName");
+      if (vm.requireName == true) {
+        vm.showVotingOptions = false;
+      } else {
+        vm.showVotingOptions = true;
+      }
       vm.requirePassword = question.get("passwordProtected");
       vm.needPassword = vm.requirePassword;
       vm.requireAdminPassword = question.get("adminPasswordRequired");
       vm.password = question.get("password");
-      console.log(vm.password);
     });
+    vm.toCopy = "localhost:8080/" + vm.questionId;
     vm.getVoteCount();
   },
   methods: {
@@ -118,20 +140,25 @@ export default {
           var res = response.get("response");
           if (res == "yay") {
             vm.yay += 1;
-            vm.yayNames.push(response.get("name"));
+            if (response.get("name") != "") {
+              vm.yayNames.push(response.get("name"));
+            }
           } else if (res == "nay") {
             vm.nay += 1;
-            vm.nayNames.push(response.get("name"));
+            if (response.get("name") != "") {
+              vm.nayNames.push(response.get("name"));
+            }
           } else {
             vm.abstain += 1;
-            vm.abstainNames.push(response.get("name"));
+            if (response.get("name") != "") {
+              vm.abstainNames.push(response.get("name"));
+            }
           }
         }
       });
     },
     votedYay() {
       const vm = this;
-      console.log("yay");
       var yayResponse = new AV.Object("Responses");
       var questionPointer = AV.Object.createWithoutData(
         "Question",
@@ -153,7 +180,6 @@ export default {
     },
     votedNay() {
       const vm = this;
-      console.log("nay");
       var nayResponse = new AV.Object("Responses");
       var questionPointer = AV.Object.createWithoutData(
         "Question",
@@ -175,7 +201,6 @@ export default {
     },
     votedAbstain() {
       const vm = this;
-      console.log("abstain");
       var abstainResponse = new AV.Object("Responses");
       var questionPointer = AV.Object.createWithoutData(
         "Question",
@@ -198,8 +223,6 @@ export default {
     startVoting() {
       const vm = this;
       vm.showVotingOptions = true;
-      console.log(vm.name);
-      console.log(vm.yayNames.includes(vm.name));
       if (
         vm.yayNames.includes(vm.name) == true ||
         vm.nayNames.includes(vm.name) == true ||
@@ -210,7 +233,6 @@ export default {
     },
     checkPassword() {
       const vm = this;
-      console.log(vm.enteredPassword);
       if (vm.password == vm.enteredPassword) {
         vm.needPassword = false;
       }
@@ -224,24 +246,46 @@ export default {
   order: 1;
   width: auto;
   display: flex;
+  /* text-align: center; */
+  justify-content: space-evenly;
+}
+
+.voting {
+  /* float: left; */
+  /* width: 100px; */
 }
 
 .voteCount {
-  margin-left: 350px;
-  text-decoration: underline;
+  /* margin-left: 350px; */
   text-align-last: justify;
-  display: block;
+  /* float: right; */
+  clear: right;
   width: auto;
-  text-justify: center;
+}
+
+.title {
+  text-decoration: underline;
+}
+
+.primary {
+  background-color: lightgrey;
 }
 
 button {
   width: 200px;
   height: 30px;
-  background-color: grey;
+  background-color: "#aaadb3";
   display: block;
   margin-left: 100px;
   margin-right: 100px;
   margin-top: 25px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.titleLine {
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
 }
 </style>

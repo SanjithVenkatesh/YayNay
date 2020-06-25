@@ -8,8 +8,8 @@
       <input v-model="email" type="email" required />
       <p>Password</p>
       <input v-model="password" type="password" required />
-      <br/>
-      <br/>
+      <br />
+      <br />
       <button type="submit">Register User</button>
     </form>
   </div>

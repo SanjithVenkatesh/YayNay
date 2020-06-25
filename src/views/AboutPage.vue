@@ -1,7 +1,7 @@
 <template>
-<div>
+  <div>
     <h1>About YayNay</h1>
-</div>
+  </div>
 </template>
 
 <script></script>

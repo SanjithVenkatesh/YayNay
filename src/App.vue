@@ -21,7 +21,7 @@ export default {
 * {
   font-family: "avenir next", sans-serif;
   font-weight: 400;
-  background-color: whitesmoke;
+  background-color: lightskyblue;
   overflow-x: hidden;
   margin-left: 0px;
 }

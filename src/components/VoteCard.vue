@@ -301,7 +301,7 @@ export default {
           vm.editingQuestion = false;
         })
         .catch(e => {
-          console.log(e);
+          alert(e);
         });
       // vm.retrieveQuestion();
     },

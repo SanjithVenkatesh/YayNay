@@ -29,7 +29,12 @@
       <span>Admin Password</span>
       <div>
         <label>
-          <input id="questionInput" v-model="aPassword" type="password" required />
+          <input
+            id="questionInput"
+            v-model="aPassword"
+            type="password"
+            required
+          />
         </label>
       </div>
       <button type="submit" class="primary">Add Question</button>

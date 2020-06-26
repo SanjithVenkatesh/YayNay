@@ -107,7 +107,7 @@ import AV from "leancloud-storage";
 export default {
   name: "CreateQuestion",
   props: {
-    questionId: String,
+    questionId: String
   },
   data() {
     return {
@@ -135,7 +135,7 @@ export default {
       adminInputPlaceholder: "Enter Admin Password",
       questionAdminPassword: "",
       editingQuestionState: false,
-      newQuestion: "",
+      newQuestion: ""
     };
   },
   created() {
@@ -286,38 +286,44 @@ export default {
         vm.editingQuestionState = true;
       }
     },
-    editQuestion(){
+    editQuestion() {
       const vm = this;
-      const newQuestion = AV.Object.createWithoutData('Question', vm.questionId);
-      newQuestion.set('question', vm.newQuestion);
-      newQuestion.save().then(()=> {
-        vm.questionText = vm.newQuestion;
-        vm.editingQuestionState = false;
-        vm.editingQuestion = false;
-      }).catch((e)=>{
-        console.log(e);
-      });
+      const newQuestion = AV.Object.createWithoutData(
+        "Question",
+        vm.questionId
+      );
+      newQuestion.set("question", vm.newQuestion);
+      newQuestion
+        .save()
+        .then(() => {
+          vm.questionText = vm.newQuestion;
+          vm.editingQuestionState = false;
+          vm.editingQuestion = false;
+        })
+        .catch(e => {
+          console.log(e);
+        });
       // vm.retrieveQuestion();
     },
-    retrieveQuestion(){
+    retrieveQuestion() {
       const vm = this;
       var questionQuery = new AV.Query("Question");
       questionQuery.get(vm.questionId).then(function(question) {
-      vm.questionText = question.get("question");
-      vm.requireName = question.get("requireName");
-      if (vm.requireName == true) {
-        vm.showVotingOptions = false;
-      } else {
-        vm.showVotingOptions = true;
-      }
-      vm.requirePassword = question.get("passwordProtected");
-      vm.needPassword = vm.requirePassword;
-      vm.requireAdminPassword = question.get("adminPasswordRequired");
-      vm.password = question.get("password");
-      vm.questionAdminPassword = question.get("adminPassword");
+        vm.questionText = question.get("question");
+        vm.requireName = question.get("requireName");
+        if (vm.requireName == true) {
+          vm.showVotingOptions = false;
+        } else {
+          vm.showVotingOptions = true;
+        }
+        vm.requirePassword = question.get("passwordProtected");
+        vm.needPassword = vm.requirePassword;
+        vm.requireAdminPassword = question.get("adminPasswordRequired");
+        vm.password = question.get("password");
+        vm.questionAdminPassword = question.get("adminPassword");
       });
     }
-  },
+  }
 };
 </script>
 

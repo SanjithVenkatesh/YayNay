@@ -1,13 +1,44 @@
 <template>
   <div>
     <div class="titleLine">
-      <h2>{{ questionText }}</h2>
-      <button type="button" v-clipboard:copy="toCopy">
-        Share Link
-      </button>
+      <div class="titleWords">
+        <h2>{{ questionText }}</h2>
+      </div>
+      <div class="titleLineButtons">
+        <button type="button" v-clipboard:copy="toCopy">
+          Share Link
+        </button>
+        <div v-if="!editingQuestionState">
+          <button
+            type="button"
+            @click="modifyEditSettings"
+            v-if="!editingQuestion"
+          >
+            Edit Link
+          </button>
+          <form @submit.prevent="validateAdminPassword" v-if="editingQuestion">
+            <input
+              v-model="adminPassword"
+              type="password"
+              :placeholder="[[adminInputPlaceholder]]"
+              required
+            />
+            <button type="submit">Validate</button>
+          </form>
+        </div>
+        <form @submit.prevent="editQuestion" v-if="editingQuestionState">
+          <input
+            v-model="newQuestion"
+            type="text"
+            placeholder="Enter New Question"
+            required
+          />
+          <button type="submit">Modify</button>
+        </form>
+      </div>
     </div>
     <div class="wholeScreen">
-      <section class="voting">
+      <div class="voting">
         <div v-if="needPassword">
           <form @submit.prevent="checkPassword">
             <h3>Vote Requires Password</h3>
@@ -46,7 +77,7 @@
             <p>Thank you for voting. Your vote has already been casted.</p>
           </div>
         </div>
-      </section>
+      </div>
       <section class="voteCount">
         <h1 class="title">Yay {{ yay }}</h1>
         <ul id="yayNames">
@@ -99,24 +130,32 @@ export default {
       needPassword: false,
       enteredPassword: "",
       toCopy: "",
+      editingQuestion: false,
+      adminPassword: "",
+      adminInputPlaceholder: "Enter Admin Password",
+      questionAdminPassword: "",
+      editingQuestionState: false,
+      newQuestion: "",
     };
   },
   created() {
     const vm = this;
-    var questionQuery = new AV.Query("Question");
-    questionQuery.get(vm.questionId).then(function(question) {
-      vm.questionText = question.get("question");
-      vm.requireName = question.get("requireName");
-      if (vm.requireName == true) {
-        vm.showVotingOptions = false;
-      } else {
-        vm.showVotingOptions = true;
-      }
-      vm.requirePassword = question.get("passwordProtected");
-      vm.needPassword = vm.requirePassword;
-      vm.requireAdminPassword = question.get("adminPasswordRequired");
-      vm.password = question.get("password");
-    });
+    vm.retrieveQuestion();
+    // var questionQuery = new AV.Query("Question");
+    // questionQuery.get(vm.questionId).then(function(question) {
+    //   vm.questionText = question.get("question");
+    //   vm.requireName = question.get("requireName");
+    //   if (vm.requireName == true) {
+    //     vm.showVotingOptions = false;
+    //   } else {
+    //     vm.showVotingOptions = true;
+    //   }
+    //   vm.requirePassword = question.get("passwordProtected");
+    //   vm.needPassword = vm.requirePassword;
+    //   vm.requireAdminPassword = question.get("adminPasswordRequired");
+    //   vm.password = question.get("password");
+    //   vm.questionAdminPassword = question.get("adminPassword");
+    // });
     vm.toCopy = "localhost:8080/" + vm.questionId;
     vm.getVoteCount();
   },
@@ -237,6 +276,47 @@ export default {
         vm.needPassword = false;
       }
     },
+    modifyEditSettings() {
+      const vm = this;
+      vm.editingQuestion = !vm.editingQuestion;
+    },
+    validateAdminPassword() {
+      const vm = this;
+      if (vm.adminPassword == vm.questionAdminPassword) {
+        vm.editingQuestionState = true;
+      }
+    },
+    editQuestion(){
+      const vm = this;
+      const newQuestion = AV.Object.createWithoutData('Question', vm.questionId);
+      newQuestion.set('question', vm.newQuestion);
+      newQuestion.save().then(()=> {
+        vm.questionText = vm.newQuestion;
+        vm.editingQuestionState = false;
+        vm.editingQuestion = false;
+      }).catch((e)=>{
+        console.log(e);
+      });
+      // vm.retrieveQuestion();
+    },
+    retrieveQuestion(){
+      const vm = this;
+      var questionQuery = new AV.Query("Question");
+      questionQuery.get(vm.questionId).then(function(question) {
+      vm.questionText = question.get("question");
+      vm.requireName = question.get("requireName");
+      if (vm.requireName == true) {
+        vm.showVotingOptions = false;
+      } else {
+        vm.showVotingOptions = true;
+      }
+      vm.requirePassword = question.get("passwordProtected");
+      vm.needPassword = vm.requirePassword;
+      vm.requireAdminPassword = question.get("adminPasswordRequired");
+      vm.password = question.get("password");
+      vm.questionAdminPassword = question.get("adminPassword");
+      });
+    }
   },
 };
 </script>
@@ -248,11 +328,6 @@ export default {
   display: flex;
   /* text-align: center; */
   justify-content: space-evenly;
-}
-
-.voting {
-  /* float: left; */
-  /* width: 100px; */
 }
 
 .voteCount {
@@ -275,17 +350,35 @@ button {
   width: 200px;
   height: 30px;
   background-color: "#aaadb3";
-  display: block;
-  margin-left: 100px;
-  margin-right: 100px;
   margin-top: 25px;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
   box-shadow: none;
 }
+
+.voting button {
+  display: block;
+}
+
+.titleLineButtons button {
+  margin-left: 50px;
+  float: right;
+  margin-right: 10px;
+}
+
+.titleLineButtons {
+  display: flex;
+  float: right;
+}
+
 .titleLine {
   display: flex;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   justify-content: center;
+}
+
+.titleLineButtons input {
+  margin-top: 25px;
+  margin-left: 25px;
+  width: 150px;
+  height: 25px;
 }
 </style>

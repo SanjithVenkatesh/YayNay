@@ -4,7 +4,8 @@ import router from "./router";
 import store from "./store";
 import vueClipboards from "vue-clipboard2";
 // import store from "./store";
-import AV from "leancloud-storage";
+// import AV from "leancloud-storage";
+const AV = require('leancloud-storage/live-query');
 Vue.use(vueClipboards);
 AV.init({
   appId: "lms0hGMSElc8CKnfQJ8onWCV-MdYXbMMI",

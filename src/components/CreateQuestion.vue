@@ -26,17 +26,11 @@
           <input type="checkbox" v-model="requireName" />
         </p>
       </div>
-      <div class="adminPassword">
-        <p>
-          Add Admin Password?
-          <input type="checkbox" v-model="adminPassword" />
-        </p>
-        <div v-if="adminPassword" class="adminPassword">
-          <label>
-            <span>Enter Admin Password</span>
-            <input id="questionInput" v-model="aPassword" type="password" />
-          </label>
-        </div>
+      <span>Admin Password</span>
+      <div>
+        <label>
+          <input id="questionInput" v-model="aPassword" type="password" required />
+        </label>
       </div>
       <button type="submit" class="primary">Add Question</button>
     </form>
@@ -62,9 +56,6 @@ export default {
       const vm = this;
       if (vm.password == false && vm.qPassword != "") {
         vm.qPassword = "";
-      }
-      if (vm.adminPassword == false && vm.aPassword != "") {
-        vm.aPassword = "";
       }
       if (
         vm.adminPassword == true &&

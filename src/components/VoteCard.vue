@@ -26,19 +26,28 @@
             <button type="submit">Validate</button>
           </form>
         </div>
-        <form @submit.prevent="editQuestion" v-if="editingQuestionState">
-          <input
-            v-model="newQuestion"
-            type="text"
-            placeholder="Enter New Question"
-            required
-          />
-          <button type="submit">Modify</button>
-        </form>
+        <div v-if="editingQuestionState">
+          <form @submit.prevent="editQuestion" v-if="editingQuestionState">
+            <input
+              v-model="newQuestion"
+              type="text"
+              placeholder="Enter New Question"
+            />
+            <button type="submit">Modify</button>
+          </form>
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              @click="changeCompleteStatus"
+              id="questionComplete"
+            />
+            <label for="questionComplete">Question Complete</label>
+          </div>
+        </div>
       </div>
     </div>
     <div class="wholeScreen">
-      <div class="voting">
+      <div class="voting" v-if="!completeStatus">
         <div v-if="needPassword">
           <form @submit.prevent="checkPassword">
             <h3>Vote Requires Password</h3>
@@ -77,6 +86,10 @@
             <p>Thank you for voting. Your vote has already been casted.</p>
           </div>
         </div>
+      </div>
+      <div class="voting" v-if="completeStatus">
+        <h2>Question is no longer</h2>
+        <h2>taking responses</h2>
       </div>
       <section class="voteCount">
         <h1 class="title">Yay {{ yay }}</h1>
@@ -135,27 +148,13 @@ export default {
       adminInputPlaceholder: "Enter Admin Password",
       questionAdminPassword: "",
       editingQuestionState: false,
-      newQuestion: ""
+      newQuestion: "",
+      completeStatus: false
     };
   },
   created() {
     const vm = this;
     vm.retrieveQuestion();
-    // var questionQuery = new AV.Query("Question");
-    // questionQuery.get(vm.questionId).then(function(question) {
-    //   vm.questionText = question.get("question");
-    //   vm.requireName = question.get("requireName");
-    //   if (vm.requireName == true) {
-    //     vm.showVotingOptions = false;
-    //   } else {
-    //     vm.showVotingOptions = true;
-    //   }
-    //   vm.requirePassword = question.get("passwordProtected");
-    //   vm.needPassword = vm.requirePassword;
-    //   vm.requireAdminPassword = question.get("adminPasswordRequired");
-    //   vm.password = question.get("password");
-    //   vm.questionAdminPassword = question.get("adminPassword");
-    // });
     vm.toCopy = "localhost:8080/" + vm.questionId;
     vm.getVoteCount();
   },
@@ -288,21 +287,23 @@ export default {
     },
     editQuestion() {
       const vm = this;
-      const newQuestion = AV.Object.createWithoutData(
-        "Question",
-        vm.questionId
-      );
-      newQuestion.set("question", vm.newQuestion);
-      newQuestion
-        .save()
-        .then(() => {
-          vm.questionText = vm.newQuestion;
-          vm.editingQuestionState = false;
-          vm.editingQuestion = false;
-        })
-        .catch(e => {
-          alert(e);
-        });
+      if (vm.newQuestion != "") {
+        const newQuestion = AV.Object.createWithoutData(
+          "Question",
+          vm.questionId
+        );
+        newQuestion.set("question", vm.newQuestion);
+        newQuestion
+          .save()
+          .then(() => {
+            vm.questionText = vm.newQuestion;
+          })
+          .catch(e => {
+            alert(e);
+          });
+      }
+      vm.editingQuestionState = false;
+      vm.editingQuestion = false;
       // vm.retrieveQuestion();
     },
     retrieveQuestion() {
@@ -322,6 +323,10 @@ export default {
         vm.password = question.get("password");
         vm.questionAdminPassword = question.get("adminPassword");
       });
+    },
+    changeCompleteStatus() {
+      const vm = this;
+      vm.completeStatus = !vm.completeStatus;
     }
   }
 };
@@ -386,5 +391,17 @@ button {
   margin-left: 25px;
   width: 150px;
   height: 25px;
+}
+
+.checkbox {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.checkbox input {
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-right: 0px;
+  padding-right: 0px;
 }
 </style>

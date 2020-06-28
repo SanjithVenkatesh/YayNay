@@ -14,7 +14,7 @@
             @click="modifyEditSettings"
             v-if="!editingQuestion"
           >
-            Edit Link
+            Edit Question
           </button>
           <form @submit.prevent="validateAdminPassword" v-if="editingQuestion">
             <input
@@ -322,11 +322,24 @@ export default {
         vm.requireAdminPassword = question.get("adminPasswordRequired");
         vm.password = question.get("password");
         vm.questionAdminPassword = question.get("adminPassword");
+        vm.completeStatus = question.get("complete");
       });
     },
     changeCompleteStatus() {
       const vm = this;
-      vm.completeStatus = !vm.completeStatus;
+      const newQuestion = AV.Object.createWithoutData(
+        "Question",
+        vm.questionId
+      );
+      newQuestion.set("complete", !vm.completeStatus);
+      newQuestion
+        .save()
+        .then(() => {
+          vm.completeStatus = !vm.completeStatus;
+        })
+        .catch(e => {
+          alert(e);
+        });
     }
   }
 };

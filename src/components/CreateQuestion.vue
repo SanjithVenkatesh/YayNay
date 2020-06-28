@@ -77,6 +77,7 @@ export default {
       newQuestion.set("adminPassword", vm.aPassword);
       newQuestion.set("passwordProtected", vm.password);
       newQuestion.set("adminPasswordRequired", vm.adminPassword);
+      newQuestion.set("complete", false);
       newQuestion.save().then(
         function(newQuestion) {
           alert("Object saved. objectId: " + newQuestion.id);

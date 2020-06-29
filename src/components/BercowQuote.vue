@@ -37,15 +37,15 @@ export default {
 
 <style scoped>
 p {
-  font-size: 8pt;
+  font-size: 12pt;
   color: red;
 }
 
 .quote {
-  margin-left: 200px;
+  /* margin-left: 200px;
   margin-right: 200px;
   padding-top: 50px;
-  padding-bottom: 10px;
+  padding-bottom: 10px; */
   text-align: center;
 }
 </style>

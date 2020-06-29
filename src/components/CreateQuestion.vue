@@ -80,7 +80,6 @@ export default {
       newQuestion.set("complete", false);
       newQuestion.save().then(
         function(newQuestion) {
-          alert("Object saved. objectId: " + newQuestion.id);
           vm.$router.push("/" + newQuestion.id);
         },
         function(error) {

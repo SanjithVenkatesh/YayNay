@@ -4,47 +4,6 @@
       <div class="titleWords">
         <h2>{{ questionText }}</h2>
       </div>
-      <div class="titleLineButtons">
-        <button type="button" v-clipboard:copy="toCopy">
-          Share Link
-        </button>
-        <div v-if="!editingQuestionState">
-          <button
-            type="button"
-            @click="modifyEditSettings"
-            v-if="!editingQuestion"
-          >
-            Edit Question
-          </button>
-          <form @submit.prevent="validateAdminPassword" v-if="editingQuestion">
-            <input
-              v-model="adminPassword"
-              type="password"
-              :placeholder="[[adminInputPlaceholder]]"
-              required
-            />
-            <button type="submit">Validate</button>
-          </form>
-        </div>
-        <div v-if="editingQuestionState">
-          <form @submit.prevent="editQuestion" v-if="editingQuestionState">
-            <input
-              v-model="newQuestion"
-              type="text"
-              placeholder="Enter New Question"
-            />
-            <button type="submit">Modify</button>
-          </form>
-          <div class="checkbox">
-            <input
-              type="checkbox"
-              @click="changeCompleteStatus"
-              id="questionComplete"
-            />
-            <label for="questionComplete">Question Complete</label>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="wholeScreen">
       <div class="voting" v-if="!completeStatus">
@@ -111,6 +70,48 @@
           </li>
         </ul>
       </section>
+    </div>
+    <div class="shareLink">
+      <h1>Share this poll</h1>
+      <button type="button" v-clipboard:copy="toCopy" style="margin-top: 0px;">
+        Share Link
+      </button>
+      <div v-if="!editingQuestionState">
+        <button
+          type="button"
+          @click="modifyEditSettings"
+          v-if="!editingQuestion"
+        >
+          Edit Question
+        </button>
+        <form @submit.prevent="validateAdminPassword" v-if="editingQuestion">
+          <input
+            v-model="adminPassword"
+            type="password"
+            :placeholder="[[adminInputPlaceholder]]"
+            required
+          />
+          <button type="submit">Validate</button>
+        </form>
+      </div>
+      <div v-if="editingQuestionState">
+        <form @submit.prevent="editQuestion" v-if="editingQuestionState">
+          <input
+            v-model="newQuestion"
+            type="text"
+            placeholder="Enter New Question"
+          />
+          <button type="submit">Modify</button>
+        </form>
+        <div class="checkbox">
+          <input
+            type="checkbox"
+            @click="changeCompleteStatus"
+            id="questionComplete"
+          />
+          <label for="questionComplete">Question Complete</label>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -206,8 +207,7 @@ export default {
       yayResponse.set("name", vm.name);
       yayResponse.set("response", "yay");
       yayResponse.save().then(
-        function(yr) {
-          alert("Your vote has been recorded: " + yr.id);
+        function() {
           vm.getVoteCount();
           vm.validVoting = false;
         },
@@ -227,8 +227,7 @@ export default {
       nayResponse.set("name", vm.name);
       nayResponse.set("response", "nay");
       nayResponse.save().then(
-        function(nr) {
-          alert("Your vote has been recorded: " + nr.id);
+        function() {
           vm.getVoteCount();
           vm.validVoting = false;
         },
@@ -248,8 +247,7 @@ export default {
       abstainResponse.set("name", vm.name);
       abstainResponse.set("response", "abstain");
       abstainResponse.save().then(
-        function(ar) {
-          alert("Your vote has been recorded: " + ar.id);
+        function() {
           vm.getVoteCount();
           vm.validVoting = false;
         },
@@ -351,7 +349,10 @@ export default {
   width: auto;
   display: flex;
   /* text-align: center; */
-  justify-content: space-evenly;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .voteCount {
@@ -371,26 +372,39 @@ export default {
 }
 
 button {
-  width: 200px;
+  width: 150px;
   height: 30px;
   background-color: "#aaadb3";
   margin-top: 25px;
   box-shadow: none;
+  margin-left: 20px;
+  border-radius: 200px;
 }
 
+.shareLink button {
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+/* 
 .voting button {
   display: block;
+} */
+
+.voting {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .titleLineButtons button {
-  margin-left: 50px;
+  /* margin-left: 50px; */
   float: right;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .titleLineButtons {
   display: flex;
-  float: right;
+  float: center;
 }
 
 .titleLine {
@@ -416,5 +430,39 @@ button {
   padding-top: 0px;
   margin-right: 0px;
   padding-right: 0px;
+}
+
+.shareLink {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .voteCount {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+
+  .titleLineButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .voteCount {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+
+  .titleLineButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

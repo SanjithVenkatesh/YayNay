@@ -112,6 +112,9 @@
           <label for="questionComplete">Question Complete</label>
         </div>
       </div>
+      <div class="deleteButton" v-if="editingQuestionState">
+        <button type="button" @click="deleteQuestion">Delete Question</button>
+      </div>
     </div>
   </div>
 </template>
@@ -156,7 +159,7 @@ export default {
   created() {
     const vm = this;
     vm.retrieveQuestion();
-    vm.toCopy = "localhost:8080/" + vm.questionId;
+    vm.toCopy = "yaynay.avosapps.us/" + vm.questionId;
     vm.getVoteCount();
   },
   methods: {
@@ -338,6 +341,12 @@ export default {
         .catch(e => {
           alert(e);
         });
+    },
+    deleteQuestion(){
+      const vm = this;
+      const question = AV.Object.createWithoutData("Question", vm.questionId);
+      question.destroy();
+      vm.$router.push("/");
     }
   }
 };
@@ -428,8 +437,8 @@ button {
 .checkbox input {
   margin-top: 0px;
   padding-top: 0px;
-  margin-right: 0px;
-  padding-right: 0px;
+  /* margin-right: 0px;
+  padding-right: 0px; */
 }
 
 .shareLink {
@@ -438,6 +447,11 @@ button {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.deleteButton button{
+  background-color: #cf3027;
+  border-color: #cf3027;
 }
 
 @media screen and (max-width: 1024px) {

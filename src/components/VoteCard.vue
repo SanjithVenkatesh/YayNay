@@ -342,7 +342,7 @@ export default {
           alert(e);
         });
     },
-    deleteQuestion(){
+    deleteQuestion() {
       const vm = this;
       const question = AV.Object.createWithoutData("Question", vm.questionId);
       question.destroy();
@@ -449,7 +449,7 @@ button {
   text-align: center;
 }
 
-.deleteButton button{
+.deleteButton button {
   background-color: #cf3027;
   border-color: #cf3027;
 }

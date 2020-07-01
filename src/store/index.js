@@ -3,6 +3,8 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
+    logInState: false,
+    settingState: false,
     sideNavOn: false,
     openedTopNavItem: "",
     globalSearchOn: false
@@ -22,6 +24,18 @@ export default new Vuex.Store({
     },
     closeGlobalSearch(state) {
       state.globalSearchOn = false;
+    },
+    logOut(state) {
+      state.logInState = false;
+    },
+    logIn(state) {
+      state.logInState = true;
+    },
+    openSettings(state) {
+      state.settingState = true;
+    },
+    closeSettings(state) {
+      state.settingState = false;
     }
   }
 });

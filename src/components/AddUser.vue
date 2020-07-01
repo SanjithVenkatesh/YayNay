@@ -41,7 +41,7 @@ export default {
       newUser.set("fullName", vm.newUser.name);
       newUser.signUp().then(
         function() {
-          alert("User has been created with the email: " + vm.email);
+          alert("User has been created with the email: " + vm.newUser.email);
           AV.User.logIn(vm.newUser.email, vm.newUser.password).then(
             () => {
               vm.newUser = {

@@ -17,12 +17,20 @@ const routes = [
         component: () => import("../views/HomePage.vue")
       },
       {
+        path: "/logIn",
+        component: () => import("../views/LogInPage.vue")
+      },
+      {
         path: "/about",
         component: () => import("../views/AboutPage.vue")
       },
       {
         path: "/register",
         component: () => import("../views/RegisterUserPage.vue")
+      },
+      {
+        path: "/settings",
+        component: () => import("../views/HomePage.vue")
       },
       {
         path: "/:id",

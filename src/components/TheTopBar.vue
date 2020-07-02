@@ -22,7 +22,7 @@
       <div v-if="$store.state.logInState">
         <li :class="[$store.state.openedTopNavItem === 'user' ? 'open' : '']">
           <button class="welcome" @click="modifyOpened">
-            <h3>Welcome {{ fullName }}</h3>
+            <h3>Welcome {{ $store.state.currentUser.fullName }}</h3>
           </button>
           <ul class="dialogue" v-if="$store.state.settingState">
             <li>
@@ -90,12 +90,11 @@ export default {
     },
     logOut() {
       const vm = this;
-      AV.User.logOut().then(() => {
-        vm.loggedIn = false;
-        vm.$store.commit("closeSettings");
-        vm.$store.commit("logOut");
-        vm.toHomePage();
-      });
+      AV.User.logOut();
+      vm.loggedIn = false;
+      vm.$store.commit("closeSettings");
+      vm.$store.commit("logOut");
+      vm.toHomePage();
     }
   }
 };

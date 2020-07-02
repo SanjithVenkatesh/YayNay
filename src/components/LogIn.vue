@@ -26,6 +26,7 @@ export default {
       const vm = this;
       AV.User.logIn(vm.email, vm.password).then(
         () => {
+          vm.$store.commit("setName", AV.User.current().get("fullName"));
           vm.$store.commit("logIn");
           vm.$store.commit("closeSettings");
           vm.$router.push("/");

@@ -14,6 +14,7 @@
 // import CreateNewOrganization from "@/components/CreateNewOrganization.vue";
 import BercowQuote from "@/components/BercowQuote.vue";
 import CreateQuestion from "../components/CreateQuestion.vue";
+import AV from "leancloud-storage";
 export default {
   name: "HomePage",
   components: {
@@ -29,7 +30,10 @@ export default {
       votes: []
     };
   },
-  created() {},
+  created() {
+    const vm = this;
+    vm.$store.commit("setName", AV.User.current().get("fullName"));
+  },
   methods: {
     callback() {
       const vm = this;

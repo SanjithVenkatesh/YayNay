@@ -7,7 +7,10 @@ export default new Vuex.Store({
     settingState: false,
     sideNavOn: false,
     openedTopNavItem: "",
-    globalSearchOn: false
+    globalSearchOn: false,
+    currentUser: {
+      fullName: ""
+    }
   },
   mutations: {
     closeSideNav(state) {
@@ -36,6 +39,9 @@ export default new Vuex.Store({
     },
     closeSettings(state) {
       state.settingState = false;
+    },
+    setName(state, newName) {
+      state.currentUser.fullName = newName;
     }
   }
 });

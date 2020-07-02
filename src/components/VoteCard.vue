@@ -208,6 +208,10 @@ export default {
       );
       yayResponse.set("questionId", questionPointer);
       yayResponse.set("name", vm.name);
+      const currentUser = AV.User.current();
+      if (currentUser) {
+        yayResponse.set("user", currentUser);
+      }
       yayResponse.set("response", "yay");
       yayResponse.save().then(
         function() {
@@ -228,6 +232,10 @@ export default {
       );
       nayResponse.set("questionId", questionPointer);
       nayResponse.set("name", vm.name);
+      const currentUser = AV.User.current();
+      if (currentUser) {
+        nayResponse.set("user", currentUser);
+      }
       nayResponse.set("response", "nay");
       nayResponse.save().then(
         function() {
@@ -248,6 +256,10 @@ export default {
       );
       abstainResponse.set("questionId", questionPointer);
       abstainResponse.set("name", vm.name);
+      const currentUser = AV.User.current();
+      if (currentUser) {
+        abstainResponse.set("user", currentUser);
+      }
       abstainResponse.set("response", "abstain");
       abstainResponse.save().then(
         function() {

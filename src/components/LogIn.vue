@@ -40,4 +40,25 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 200px;
+}
+
+form button {
+  margin-top: 10px;
+}
+</style>

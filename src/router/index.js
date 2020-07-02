@@ -30,7 +30,7 @@ const routes = [
       },
       {
         path: "/settings",
-        component: () => import("../views/HomePage.vue")
+        component: () => import("../views/SettingsPage.vue")
       },
       {
         path: "/:id",

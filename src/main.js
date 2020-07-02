@@ -14,6 +14,12 @@ AV.init({
 
 Vue.config.productionTip = false;
 
+export default {
+  logOut: function() {
+    console.log("logOut");
+  }
+};
+
 new Vue({
   router,
   store,

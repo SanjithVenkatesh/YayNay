@@ -32,7 +32,12 @@ export default {
   },
   created() {
     const vm = this;
-    vm.$store.commit("setName", AV.User.current().get("fullName"));
+    const currentUser = AV.User.current();
+    if (currentUser) {
+      vm.$store.commit("setName", AV.User.current().get("fullName"));
+    } else {
+      vm.$store.commit("logOut");
+    }
   },
   methods: {
     callback() {

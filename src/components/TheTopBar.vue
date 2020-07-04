@@ -26,6 +26,11 @@
           </button>
           <ul class="dialogue" v-if="$store.state.settingState">
             <li>
+              <button @click="toProfilePage">
+                <span>Profile</span>
+              </button>
+            </li>
+            <li>
               <router-link :to="'/settings'">
                 <span>Settings</span>
               </router-link>
@@ -95,6 +100,10 @@ export default {
       vm.$store.commit("closeSettings");
       vm.$store.commit("logOut");
       vm.toHomePage();
+    },
+    toProfilePage() {
+      const vm = this;
+      vm.$router.push("/users/" + AV.User.current().get("objectId"));
     }
   }
 };

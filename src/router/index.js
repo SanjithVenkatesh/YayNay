@@ -33,6 +33,10 @@ const routes = [
         component: () => import("../views/SettingsPage.vue")
       },
       {
+        path: "/users/:id",
+        component: () => import("../views/UserProfilePage.vue")
+      },
+      {
         path: "/:id",
         component: () => import("../views/VotingPage.vue")
       }

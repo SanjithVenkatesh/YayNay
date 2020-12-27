@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
     };
   },
   methods: {
@@ -31,13 +31,13 @@ export default {
           vm.$store.commit("closeSettings");
           vm.$router.push("/");
         },
-        error => {
+        (error) => {
           alert(error);
         }
       );
-    }
+    },
   },
-  created() {}
+  created() {},
 };
 </script>
 

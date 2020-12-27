@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "TheBasicWrapper"
+  name: "TheBasicWrapper",
 };
 </script>
 
@@ -17,7 +17,7 @@ export default {
   width: 100%;
   overflow: auto;
 }
-/* @media (min-width: 544px) {
+@media (min-width: 544px) {
   #page {
     padding: 0 32px 88px 0px;
   }
@@ -31,5 +31,5 @@ export default {
   #page {
     width: 1536px;
   }
-} */
+}
 </style>

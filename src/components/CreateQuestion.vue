@@ -53,7 +53,7 @@ export default {
       qPassword: "",
       requireName: false,
       adminPassword: false,
-      aPassword: ""
+      aPassword: "",
     };
   },
   methods: {
@@ -80,15 +80,15 @@ export default {
       newQuestion.set("createdBy", AV.User.current());
       newQuestion.set("complete", false);
       newQuestion.save().then(
-        function(newQuestion) {
+        function (newQuestion) {
           vm.$router.push("/" + newQuestion.id);
         },
-        function(error) {
+        function (error) {
           alert(error);
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

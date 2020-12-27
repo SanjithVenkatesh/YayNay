@@ -1,44 +1,56 @@
 <template>
   <nav>
-    <ul class="left">
-      <li>
-        <h2 class="left"><a href="/">YayNay</a></h2>
-      </li>
-    </ul>
-    <ul class="right">
-      <div v-if="$store.state.logInState">
-        <li :class="[$store.state.openedTopNavItem === 'user' ? 'open' : '']">
-          <button class="welcome" @click="modifyOpened">
-            <h3>Welcome {{ $store.state.currentUser.fullName }}</h3>
-          </button>
-          <ul class="dialogue" v-if="$store.state.settingState">
-            <li>
-              <button @click="toProfilePage">
-                <span>Profile</span>
-              </button>
-            </li>
-            <li>
-              <router-link :to="'/settings'">
-                <span>Settings</span>
-              </router-link>
-            </li>
-            <li>
-              <button @click="logOut">
-                <span>Log out</span>
-              </button>
-            </li>
-          </ul>
+    <div
+      :class="{ dark: $store.state.darkTheme, light: $store.state.lightTheme }"
+    >
+      <ul class="left">
+        <li>
+          <h2 class="left" style="text-decoration: none">
+            <a class="noDecoration" href="/">YayNay</a>
+          </h2>
         </li>
-      </div>
-      <div v-if="!$store.state.logInState">
-        <router-link :to="'/register'">
-          <span>Sign Up</span>
-        </router-link>
-        <router-link :to="'/login'">
-          <span>Log In</span>
-        </router-link>
-      </div>
-    </ul>
+      </ul>
+      <ul
+        class="right"
+        :class="{
+          dark: $store.state.darkTheme,
+          light: $store.state.lightTheme,
+        }"
+      >
+        <div v-if="$store.state.logInState">
+          <li :class="[$store.state.openedTopNavItem === 'user' ? 'open' : '']">
+            <button class="welcome" @click="modifyOpened">
+              <h3>Welcome {{ $store.state.currentUser.fullName }}</h3>
+            </button>
+            <ul class="dialogue" v-if="$store.state.settingState">
+              <li>
+                <button @click="toProfilePage">
+                  <span>Profile</span>
+                </button>
+              </li>
+              <li>
+                <router-link :to="'/settings'">
+                  <span>Settings</span>
+                </router-link>
+              </li>
+              <li>
+                <button @click="logOut">
+                  <span>Log out</span>
+                </button>
+              </li>
+            </ul>
+          </li>
+        </div>
+        <div v-if="!$store.state.logInState">
+          <router-link :to="'/register'">
+            <span>Sign Up</span>
+          </router-link>
+          <router-link :to="'/login'">
+            <span>Log In</span>
+          </router-link>
+        </div>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -50,11 +62,19 @@ export default {
     return {
       loggedIn: false,
       fullName: "",
-      theme: "light"
     };
+  },
+  watch: {
+    lightTheme: function (newVal) {
+      console.log("New lightTheme = " + newVal);
+    },
+    darkTheme: function (newVal) {
+      console.log("New darkTheme = " + newVal);
+    },
   },
   created() {
     const vm = this;
+    console.log("in top bar, lightTheme = " + vm.lightTheme);
     vm.$forceUpdate();
     vm.$store.commit("closeSettings");
     const currentUser = AV.User.current();
@@ -92,19 +112,20 @@ export default {
     toProfilePage() {
       const vm = this;
       vm.$router.push("/users/" + AV.User.current().get("objectId"));
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 * {
   text-align: left;
-  background-color: whitesmoke;
   /* display: flex; */
   margin-left: 10px;
   margin-right: 10px;
-  margin-top: 5px;
+  text-decoration: none;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .left,
@@ -142,7 +163,6 @@ nav {
 }
 
 a {
-  color: black;
   text-decoration: none;
 }
 
@@ -157,7 +177,6 @@ a {
   margin: 0;
   margin-left: 0px;
   padding: 0px 0 0 0;
-  background-color: whitesmoke;
   border-radius: 2px;
   list-style: none;
 }
@@ -172,6 +191,24 @@ a {
 
 .dialogue button {
   font-size: 16px;
+}
+.dark a {
+  text-decoration: none;
+}
+
+.dark {
+  background-color: #121212;
+  color: white;
+}
+
+.dark h3,
+h2,
+span {
+  color: white;
+}
+
+.light {
+  background-color: whitesmoke;
 }
 
 a[href],

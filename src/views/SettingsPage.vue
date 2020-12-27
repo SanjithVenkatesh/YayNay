@@ -10,7 +10,7 @@ export default {
   name: "SettingsPage",
   props: {},
   components: {
-    Settings
+    Settings,
   },
   data() {
     return {};
@@ -18,7 +18,7 @@ export default {
   methods: {},
   created() {
     alert("in settings page");
-  }
+  },
 };
 </script>
 

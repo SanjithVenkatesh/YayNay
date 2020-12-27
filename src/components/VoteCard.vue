@@ -26,14 +26,14 @@
             <div class="voteOptions" v-if="showVotingOptions">
               <button
                 class="primary"
-                style="background-color: #36c25b;border-color:#36c25b "
+                style="background-color: #36c25b; border-color: #36c25b"
                 @click="votedYay"
               >
                 Yay
               </button>
               <button
                 class="primary"
-                style="background-color: #cf3027;border-color:#cf3027 "
+                style="background-color: #cf3027; border-color: #cf3027"
                 v-on:click="votedNay"
               >
                 Nay
@@ -82,7 +82,7 @@
     </div>
     <div class="shareLink">
       <h1>Share this poll</h1>
-      <button type="button" v-clipboard:copy="toCopy" style="margin-top: 0px;">
+      <button type="button" v-clipboard:copy="toCopy" style="margin-top: 0px">
         Share Link
       </button>
       <div v-if="!editingQuestionState">
@@ -213,11 +213,11 @@ export default {
       }
       yayResponse.set("response", "yay");
       yayResponse.save().then(
-        function() {
+        function () {
           vm.getVoteCount();
           vm.validVoting = false;
         },
-        function(error) {
+        function (error) {
           alert(error);
         }
       );
@@ -237,11 +237,11 @@ export default {
       }
       nayResponse.set("response", "nay");
       nayResponse.save().then(
-        function() {
+        function () {
           vm.getVoteCount();
           vm.validVoting = false;
         },
-        function(error) {
+        function (error) {
           alert(error);
         }
       );
@@ -261,11 +261,11 @@ export default {
       }
       abstainResponse.set("response", "abstain");
       abstainResponse.save().then(
-        function() {
+        function () {
           vm.getVoteCount();
           vm.validVoting = false;
         },
-        function(error) {
+        function (error) {
           alert(error);
         }
       );
@@ -322,7 +322,7 @@ export default {
       const vm = this;
       var questionQuery = new AV.Query("Question");
       questionQuery.get(vm.questionId).then(
-        function(question) {
+        function (question) {
           vm.questionText = question.get("question");
           vm.requireName = question.get("requireName");
           if (vm.requireName == true) {

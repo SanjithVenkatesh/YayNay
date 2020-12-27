@@ -10,11 +10,11 @@ export default {
   name: "UserProfilePage",
   props: {},
   components: {
-    UserProfile
+    UserProfile,
   },
   data() {
     return {
-      id: ""
+      id: "",
     };
   },
   methods: {},
@@ -22,7 +22,7 @@ export default {
     const vm = this;
     vm.id = vm.$route.params.id;
     vm.$store.commit("closeSettings");
-  }
+  },
 };
 </script>
 

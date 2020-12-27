@@ -44,13 +44,16 @@ export default {
       newUser.setEmail(vm.newUser.email);
       newUser.set("fullName", vm.newUser.name);
       newUser.signUp().then(
-        function() {
+        function () {
           alert("User has been created with the email: " + vm.newUser.email);
           AV.User.logIn(vm.newUser.email, vm.newUser.password).then(
             (loggedInUser) => {
               vm.$store.commit("logIn");
               const newDN = new AV.Object("DisplayName");
-              const newUser = AV.Object.createWithoutData("_User", loggedInUser.id);
+              const newUser = AV.Object.createWithoutData(
+                "_User",
+                loggedInUser.id
+              );
               newDN.set("User", newUser);
               newDN.set("displayName", vm.newUser.displayName);
               newDN.save().then(
@@ -73,7 +76,7 @@ export default {
             }
           );
         },
-        function(error) {
+        function (error) {
           if (error.code === 125) {
             alert(
               "The email address you entered is not a valid one. Please check your input."

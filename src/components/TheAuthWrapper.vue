@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "TheAuthWrapper"
+  name: "TheAuthWrapper",
 };
 </script>
 

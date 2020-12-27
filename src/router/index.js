@@ -9,44 +9,44 @@ const routes = [
     components: {
       basicWrapper: () => import("../components/TheBasicWrapper.vue"),
       topBar: () => import("../components/TheTopBar.vue"),
-      bercowQuote: () => import("@/components/BercowQuote.vue")
+      bercowQuote: () => import("@/components/BercowQuote.vue"),
     },
     children: [
       {
         path: "/",
-        component: () => import("../views/HomePage.vue")
+        component: () => import("../views/HomePage.vue"),
       },
       {
         path: "/logIn",
-        component: () => import("../views/LogInPage.vue")
+        component: () => import("../views/LogInPage.vue"),
       },
       {
         path: "/about",
-        component: () => import("../views/AboutPage.vue")
+        component: () => import("../views/AboutPage.vue"),
       },
       {
         path: "/register",
-        component: () => import("../views/RegisterUserPage.vue")
+        component: () => import("../views/RegisterUserPage.vue"),
       },
       {
         path: "/settings",
-        component: () => import("../views/SettingsPage.vue")
+        component: () => import("../views/SettingsPage.vue"),
       },
       {
         path: "/users/:id",
-        component: () => import("../views/UserProfilePage.vue")
+        component: () => import("../views/UserProfilePage.vue"),
       },
       {
         path: "/:id",
-        component: () => import("../views/VotingPage.vue")
-      }
-    ]
-  }
+        component: () => import("../views/VotingPage.vue"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 export default router;

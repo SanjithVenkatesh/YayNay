@@ -8,9 +8,11 @@ export default new Vuex.Store({
     sideNavOn: false,
     openedTopNavItem: "",
     globalSearchOn: false,
+    lightTheme: true,
+    darkTheme: false,
     currentUser: {
-      fullName: ""
-    }
+      fullName: "",
+    },
   },
   mutations: {
     closeSideNav(state) {
@@ -42,6 +44,14 @@ export default new Vuex.Store({
     },
     setName(state, newName) {
       state.currentUser.fullName = newName;
-    }
-  }
+    },
+    setDarkTheme(state) {
+      state.lightTheme = false;
+      state.darkTheme = true;
+    },
+    setLightTheme(state) {
+      state.lightTheme = true;
+      state.darkTheme = false;
+    },
+  },
 });

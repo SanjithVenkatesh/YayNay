@@ -11,13 +11,13 @@ export default {
   name: "LogInPage",
   props: {},
   components: {
-    LogIn
+    LogIn,
   },
   data() {
     return {};
   },
   methods: {},
-  created() {}
+  created() {},
 };
 </script>
 

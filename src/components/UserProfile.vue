@@ -44,7 +44,7 @@ import AV from "leancloud-storage";
 export default {
   name: "UserProfile",
   props: {
-    userId: String
+    userId: String,
   },
   components: {},
   data() {
@@ -52,7 +52,7 @@ export default {
       questions: [],
       responses: [],
       fullName: "",
-      email: ""
+      email: "",
     };
   },
   created() {
@@ -67,11 +67,11 @@ export default {
       const vm = this;
       const userQuery = new AV.Query("_User");
       userQuery.get(vm.userId).then(
-        user => {
+        (user) => {
           vm.fullName = user.get("fullName");
           vm.email = user.get("username");
         },
-        error => {
+        (error) => {
           alert(error);
         }
       );
@@ -85,7 +85,7 @@ export default {
         .equalTo("createdBy", userObject)
         .find()
         .then(
-          questions => {
+          (questions) => {
             for (const question of questions) {
               const responseQuery = new AV.Query("Responses");
               responseQuery.equalTo(
@@ -93,7 +93,7 @@ export default {
                 AV.Object.createWithoutData("Question", question.id)
               );
               responseQuery.find().then(
-                responses => {
+                (responses) => {
                   var yays = 0;
                   var nays = 0;
                   var abstains = 0;
@@ -112,17 +112,17 @@ export default {
                     questionText: question.get("question"),
                     yays: yays,
                     nays: nays,
-                    abstains: abstains
+                    abstains: abstains,
                   };
                   vm.questions.push(questionResponse);
                 },
-                error => {
+                (error) => {
                   alert(error);
                 }
               );
             }
           },
-          error => {
+          (error) => {
             alert(error);
           }
         );
@@ -135,29 +135,29 @@ export default {
         AV.Object.createWithoutData("_User", vm.userId)
       );
       responseQuery.find().then(
-        responses => {
+        (responses) => {
           for (const response of responses) {
             const questionQuery = new AV.Query("Question");
             questionQuery.get(response.get("questionId").id).then(
-              question => {
+              (question) => {
                 var newResponse = {
                   questionText: question.get("question"),
-                  response: response.get("response")
+                  response: response.get("response"),
                 };
                 vm.responses.push(newResponse);
               },
-              error => {
+              (error) => {
                 alert(error);
               }
             );
           }
         },
-        error => {
+        (error) => {
           alert(error);
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

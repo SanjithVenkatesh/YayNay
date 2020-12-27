@@ -14,11 +14,11 @@ import AV from "leancloud-storage";
 export default {
   name: "CreateNewOrganization",
   props: {
-    callback: Function
+    callback: Function,
   },
   data() {
     return {
-      newOrganizationName: ""
+      newOrganizationName: "",
     };
   },
   methods: {
@@ -29,15 +29,15 @@ export default {
       newOrg.set("name", vm.newOrganizationName);
       newOrg.set("createdBy", AV.User.current());
       newOrg.save().then(
-        function() {
+        function () {
           vm.callback();
         },
-        function(error) {
+        function (error) {
           alert(error);
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -18,11 +18,11 @@ export default {
   name: "VotingPage",
   components: {
     // BercowQuote,
-    VoteCard
+    VoteCard,
   },
   data() {
     return {
-      id: ""
+      id: "",
     };
   },
   created() {
@@ -30,8 +30,8 @@ export default {
     vm.id = vm.$route.params.id;
   },
   methods: {
-    callback() {}
-  }
+    callback() {},
+  },
 };
 </script>
 

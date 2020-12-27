@@ -58,7 +58,7 @@ export default {
   name: "AuthPage",
   components: {
     AddUser,
-    BercowQuote
+    BercowQuote,
   },
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
       ltc: "M9UTd2i2tSPPesQ8kevN8RsWGV4u9iPd8F",
       btc: "3LZqJP5gDRSfuxkvw8FWPbrWeC2WJ5an4J",
       eth: "0x3db1f8aF0C438E5768eA3967f70138F9387DB449",
-      addUser: false
+      addUser: false,
     };
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
         .then(() => {
           vm.$router.push(vm.$route.query.return || "/overview");
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.code === 210) {
             alert("The password you have provided is incorrect.");
           } else if (error.code === 211) {
@@ -90,8 +90,8 @@ export default {
     callback() {
       const vm = this;
       vm.addUser = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

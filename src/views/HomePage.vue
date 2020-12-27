@@ -19,7 +19,7 @@ export default {
   name: "HomePage",
   components: {
     BercowQuote,
-    CreateQuestion
+    CreateQuestion,
   },
   data() {
     return {
@@ -27,7 +27,7 @@ export default {
       name: "",
       organizations: [],
       meetings: [],
-      votes: []
+      votes: [],
     };
   },
   created() {
@@ -43,8 +43,8 @@ export default {
     callback() {
       const vm = this;
       vm.addOrg = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

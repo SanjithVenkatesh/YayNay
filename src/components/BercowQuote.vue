@@ -21,22 +21,22 @@ export default {
         "I'm not in the business of warning people.",
         "I'm supremely uninterested as to what is written in many of the newspapers.",
         "I do very gently say that to sit on the bench... fiddling ostentatiously with an electronic device defies the established convention of the house that such devices should be used without impairing parliamentary decorum. They are impairing parliamentary decorum. It's a point so blindingly obvious that only an extraordinarily clever and sophisticated person could fail to grasp it.",
-        "Mr Gove! You really are a rather over-excited individual! You need to write out 1,000 times 'I will behave myself at Prime Minister's Questions'."
-      ]
+        "Mr Gove! You really are a rather over-excited individual! You need to write out 1,000 times 'I will behave myself at Prime Minister's Questions'.",
+      ],
     };
   },
   created() {
     const vm = this;
-    var myRandom = round(random(0, vm.quotesToChooseFrom.length-1));
+    var myRandom = round(random(0, vm.quotesToChooseFrom.length - 1));
     vm.quote = vm.quotesToChooseFrom[myRandom];
     vm.quote += "- John Bercow";
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
 <style scoped>
-*{
+* {
   margin-left: 10px;
   margin-right: 10px;
 }

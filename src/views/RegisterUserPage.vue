@@ -9,17 +9,17 @@ import AddUser from "../components/AddUser.vue";
 export default {
   name: "RegisterUserPage",
   components: {
-    AddUser
+    AddUser,
   },
   data() {
     return {
-      setUser: false
+      setUser: false,
     };
   },
   created() {},
   methods: {
-    callback() {}
-  }
+    callback() {},
+  },
 };
 </script>
 

@@ -1,17 +1,4 @@
 <template>
-  <!-- <div>
-    <button type="logOut" class="primary" v-on:click="logOut">Create New Question</button>
-      <button type="logOut" class="primary" v-on:click="about">About</button>
-    <h2 class="left"><a href="/">YayNay</a></h2>
-    <div class="right" v-if="!loggedIn">
-      <h3>Sign Up</h3>
-      <h3>Log In</h3>
-    </div>
-    <div class="right" v-if="loggedIn">
-      <p>Welcome {{fullName}}</p>
-    </div>
-    <div style="clear: both;"></div>
-  </div> -->
   <nav>
     <ul class="left">
       <li>
@@ -62,7 +49,8 @@ export default {
   data() {
     return {
       loggedIn: false,
-      fullName: ""
+      fullName: "",
+      theme: "light"
     };
   },
   created() {

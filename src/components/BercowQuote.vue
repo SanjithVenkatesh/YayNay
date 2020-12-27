@@ -27,7 +27,7 @@ export default {
   },
   created() {
     const vm = this;
-    var myRandom = round(random(0, vm.quotesToChooseFrom.length));
+    var myRandom = round(random(0, vm.quotesToChooseFrom.length-1));
     vm.quote = vm.quotesToChooseFrom[myRandom];
     vm.quote += "- John Bercow";
   },
@@ -36,6 +36,11 @@ export default {
 </script>
 
 <style scoped>
+*{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 p {
   font-size: 12pt;
   color: red;

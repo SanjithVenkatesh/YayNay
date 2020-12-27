@@ -4,6 +4,8 @@
     <form @submit.prevent="createNewUser">
       <p>Full Name</p>
       <input v-model="newUser.name" type="text" required />
+      <p>Display Name</p>
+      <input v-model="newUser.displayName" type="text" required />
       <p>Email address</p>
       <input v-model="newUser.email" type="email" required />
       <p>Password</p>
@@ -28,8 +30,9 @@ export default {
         name: "",
         email: "",
         phoneNumber: "",
-        password: ""
-      }
+        password: "",
+        displayName: "",
+      },
     };
   },
   methods: {
@@ -38,21 +41,34 @@ export default {
       var newUser = new AV.User();
       newUser.setUsername(vm.newUser.email);
       newUser.setPassword(vm.newUser.password);
+      newUser.setEmail(vm.newUser.email);
       newUser.set("fullName", vm.newUser.name);
       newUser.signUp().then(
         function() {
           alert("User has been created with the email: " + vm.newUser.email);
           AV.User.logIn(vm.newUser.email, vm.newUser.password).then(
-            () => {
-              vm.newUser = {
-                name: "",
-                email: "",
-                phoneNumber: "",
-                password: ""
-              };
-              vm.$router.push("/");
+            (loggedInUser) => {
+              vm.$store.commit("logIn");
+              const newDN = new AV.Object("DisplayName");
+              const newUser = AV.Object.createWithoutData("_User", loggedInUser.id);
+              newDN.set("User", newUser);
+              newDN.set("displayName", vm.newUser.displayName);
+              newDN.save().then(
+                () => {
+                  vm.newUser = {
+                    name: "",
+                    email: "",
+                    phoneNumber: "",
+                    password: "",
+                  };
+                  vm.$router.push("/");
+                },
+                (error) => {
+                  alert(error);
+                }
+              );
             },
-            error => {
+            (error) => {
               alert(error);
             }
           );
@@ -79,9 +95,9 @@ export default {
           }
         }
       );
-    }
+    },
   },
-  created() {}
+  created() {},
 };
 </script>
 

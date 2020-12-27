@@ -8,13 +8,50 @@
       <!-- <router-view name="authWrapper" class="auth-wrapper"></router-view> -->
       <router-view name="basicWrapper" class="basic-wrapper"></router-view>
     </transition>
+     <button @click="darkThemeSwitch">Switch Theme</button>
   </div>
 </template>
 
 <script>
+import AV from "leancloud-storage";
 export default {
   name: "App",
-  components: {}
+  components: {},
+  methods:{
+    _addDarkTheme() {
+      let darkThemeLinkEl = document.createElement("link");
+      darkThemeLinkEl.setAttribute("rel", "stylesheet");
+      darkThemeLinkEl.setAttribute("href", "/css/darktheme.css");
+      darkThemeLinkEl.setAttribute("id", "dark-theme-style");
+
+      let docHead = document.querySelector("head");
+      docHead.append(darkThemeLinkEl);
+    },
+    _removeDarkTheme() {
+      let darkThemeLinkEl = document.querySelector("#dark-theme-style");
+      let parentNode = darkThemeLinkEl.parentNode;
+      parentNode.removeChild(darkThemeLinkEl);
+    },
+    darkThemeSwitch() {
+      let darkThemeLinkEl = document.querySelector("#dark-theme-style");
+      if (!darkThemeLinkEl) {
+        this._addDarkTheme()
+      } else {
+        this._removeDarkTheme()
+      }
+    },
+  },
+  created(){
+    const vm = this;
+    const currentUser = AV.User.current();
+    if(currentUser){
+      vm.$store.commit("setName", currentUser.get("fullName"));
+      vm.$store.commit("logIn");
+    }
+    else{
+      vm.$store.commit("logOut");
+    }
+  }
 };
 </script>
 

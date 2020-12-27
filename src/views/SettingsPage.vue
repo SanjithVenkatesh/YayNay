@@ -17,7 +17,7 @@ export default {
   },
   methods: {},
   created() {
-    console.log("in settings page");
+    alert("in settings page");
   }
 };
 </script>

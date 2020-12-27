@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Settings</h1>
     <div class="changePassword">
       <label>Change Password</label>
       <form @submit.prevent="authenticateNewPassword">
@@ -18,6 +19,16 @@
         <button type="submit">Reset Password</button>
       </form>
     </div>
+    <div class="changePassword">
+      <label>Change Display Name</label>
+      <form @submit.prevent="changeDisplayName">
+        <div>
+          <span>New Display Name</span>
+          <input v-model="newDisplayName" type="text" required />
+        </div>
+        <button type="submit">Change Name</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -30,7 +41,8 @@ export default {
     return {
       currentPassword: "",
       newPassword: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      newDisplayName: "",
     };
   },
   methods: {
@@ -46,16 +58,42 @@ export default {
             vm.$store.commit("closeSettings");
             vm.$router.push("/");
           },
-          error => {
+          (error) => {
             alert(error);
           }
         );
-    }
+    },
+    changeDisplayName() {
+      const vm = this;
+      const ifExistsQuery = new AV.Query("DisplayName");
+      ifExistsQuery.equalTo("displayName", vm.newDisplayName).first(
+        (result) => {
+          if (!result) {
+            AV.User.getCurrentUser()
+              .set("displayName", vm.newDisplayName)
+              .save()
+              .then(
+                () => {
+                  vm.$store.commit("closeSettings");
+                },
+                (error) => {
+                  alert(error);
+                }
+              );
+          } else {
+            alert("Display name already in use!!");
+          }
+        },
+        (error) => {
+          alert(error);
+        }
+      );
+    },
   },
   created() {
     const vm = this;
     vm.$store.commit("closeSettings");
-  }
+  },
 };
 </script>
 
@@ -85,5 +123,9 @@ form div {
 
 .changePassword input {
   margin-left: 10px;
+}
+
+.changePassword {
+  margin-bottom: 25px;
 }
 </style>

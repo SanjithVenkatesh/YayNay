@@ -54,19 +54,28 @@
         <h1 class="title">Yay {{ yay }}</h1>
         <ul id="yayNames">
           <li v-for="name in yayNames" :key="name.id">
-            {{ name }}
+            <div v-if="name.displayName">@{{ name.displayName }}</div>
+            <div v-else>
+              {{ name }}
+            </div>
           </li>
         </ul>
         <h1 class="title">Nay {{ nay }}</h1>
         <ul id="yayNames">
           <li v-for="name in nayNames" :key="name.id">
-            {{ name }}
+            <div v-if="name.displayName">@{{ name.displayName }}</div>
+            <div v-else>
+              {{ name }}
+            </div>
           </li>
         </ul>
         <h1 class="title">Abstain {{ abstain }}</h1>
         <ul id="yayNames">
           <li v-for="name in abstainNames" :key="name.id">
-            {{ name }}
+            <div v-if="name.displayName">@{{ name.displayName }}</div>
+            <div v-else>
+              {{ name }}
+            </div>
           </li>
         </ul>
       </section>
@@ -124,7 +133,7 @@ import AV from "leancloud-storage";
 export default {
   name: "CreateQuestion",
   props: {
-    questionId: String
+    questionId: String,
   },
   data() {
     return {
@@ -153,48 +162,38 @@ export default {
       questionAdminPassword: "",
       editingQuestionState: false,
       newQuestion: "",
-      completeStatus: false
+      completeStatus: false,
     };
   },
   created() {
     const vm = this;
     vm.retrieveQuestion();
-    vm.toCopy = "yaynay.avosapps.us/" + vm.questionId;
-    vm.getVoteCount();
   },
   methods: {
     getVoteCount() {
       const vm = this;
-      vm.yay = 0;
-      vm.nay = 0;
-      vm.abstain = 0;
       vm.yayNames = [];
       vm.nayNames = [];
       vm.abstainNames = [];
-      var voteQuery = new AV.Query("Responses");
       var questionPointer = AV.Object.createWithoutData(
         "Question",
         vm.questionId
       );
-      voteQuery.equalTo("questionId", questionPointer);
-      voteQuery.find().then(function(responses) {
-        for (const response of responses) {
-          var res = response.get("response");
-          if (res == "yay") {
+      const responseQuery = new AV.Query("Responses");
+      responseQuery.equalTo("questionId", questionPointer);
+      responseQuery.find().then((responses) => {
+        for (const r of responses) {
+          const answer = r.get("response");
+          const rName = "bob";
+          if (answer == "yay") {
+            vm.yayNames.push(rName);
             vm.yay += 1;
-            if (response.get("name") != "") {
-              vm.yayNames.push(response.get("name"));
-            }
-          } else if (res == "nay") {
+          } else if (answer == "nay") {
+            vm.nayNames.push(rName);
             vm.nay += 1;
-            if (response.get("name") != "") {
-              vm.nayNames.push(response.get("name"));
-            }
-          } else {
+          } else if (answer == "abstain") {
+            vm.abstainNames.push(rName);
             vm.abstain += 1;
-            if (response.get("name") != "") {
-              vm.abstainNames.push(response.get("name"));
-            }
           }
         }
       });
@@ -311,7 +310,7 @@ export default {
           .then(() => {
             vm.questionText = vm.newQuestion;
           })
-          .catch(e => {
+          .catch((e) => {
             alert(e);
           });
       }
@@ -322,21 +321,28 @@ export default {
     retrieveQuestion() {
       const vm = this;
       var questionQuery = new AV.Query("Question");
-      questionQuery.get(vm.questionId).then(function(question) {
-        vm.questionText = question.get("question");
-        vm.requireName = question.get("requireName");
-        if (vm.requireName == true) {
-          vm.showVotingOptions = false;
-        } else {
-          vm.showVotingOptions = true;
+      questionQuery.get(vm.questionId).then(
+        function(question) {
+          vm.questionText = question.get("question");
+          vm.requireName = question.get("requireName");
+          if (vm.requireName == true) {
+            vm.showVotingOptions = false;
+          } else {
+            vm.showVotingOptions = true;
+          }
+          vm.requirePassword = question.get("passwordProtected");
+          vm.needPassword = vm.requirePassword;
+          vm.requireAdminPassword = question.get("adminPasswordRequired");
+          vm.password = question.get("password");
+          vm.questionAdminPassword = question.get("adminPassword");
+          vm.completeStatus = question.get("complete");
+          vm.toCopy = "yaynay.avosapps.us/" + vm.questionId;
+          vm.getVoteCount();
+        },
+        (error) => {
+          alert(error);
         }
-        vm.requirePassword = question.get("passwordProtected");
-        vm.needPassword = vm.requirePassword;
-        vm.requireAdminPassword = question.get("adminPasswordRequired");
-        vm.password = question.get("password");
-        vm.questionAdminPassword = question.get("adminPassword");
-        vm.completeStatus = question.get("complete");
-      });
+      );
     },
     changeCompleteStatus() {
       const vm = this;
@@ -350,7 +356,7 @@ export default {
         .then(() => {
           vm.completeStatus = !vm.completeStatus;
         })
-        .catch(e => {
+        .catch((e) => {
           alert(e);
         });
     },
@@ -359,8 +365,8 @@ export default {
       const question = AV.Object.createWithoutData("Question", vm.questionId);
       question.destroy();
       vm.$router.push("/");
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -15,10 +15,6 @@
       <!-- <router-view name="authWrapper" class="auth-wrapper"></router-view> -->
       <router-view name="basicWrapper" class="basic-wrapper"></router-view>
     </transition>
-    <div id="Switch Theme">
-      <label>Switch Theme</label>
-      <toggle-button @change="themeSwitch" />
-    </div>
   </div>
 </template>
 
@@ -74,16 +70,22 @@ export default {
   background-color: #121212;
   height: 100%;
   color: white;
+  text-decoration-color: green;
 }
 
 .light {
   background-color: whitesmoke;
   min-height: 100%;
+  text-decoration-color: black;
 }
 
-/* html, body{
+html, body{
   height: 100%;
-} */
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
 
 h1 {
   font-weight: 600;

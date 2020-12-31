@@ -38,7 +38,13 @@
               >
                 Nay
               </button>
-              <button class="primary" v-on:click="votedAbstain">Abstain</button>
+              <button
+                class="primary"
+                style="background-color: lightgray; border-color: lightgray"
+                v-on:click="votedAbstain"
+              >
+                Abstain
+              </button>
             </div>
           </div>
           <div v-if="!validVoting">
@@ -51,37 +57,43 @@
         <h2>taking responses</h2>
       </div>
       <section class="voteCount">
-        <h1 class="title">Yay {{ yay }}</h1>
-        <ul id="yayNames">
-          <li v-for="name in yayNames" :key="name.id">
-            <div v-if="name.displayName">@{{ name.displayName }}</div>
-            <div v-else>
-              {{ name }}
-            </div>
-          </li>
-        </ul>
-        <h1 class="title">Nay {{ nay }}</h1>
-        <ul id="yayNames">
-          <li v-for="name in nayNames" :key="name.id">
-            <div v-if="name.displayName">@{{ name.displayName }}</div>
-            <div v-else>
-              {{ name }}
-            </div>
-          </li>
-        </ul>
-        <h1 class="title">Abstain {{ abstain }}</h1>
-        <ul id="yayNames">
-          <li v-for="name in abstainNames" :key="name.id">
-            <div v-if="name.displayName">@{{ name.displayName }}</div>
-            <div v-else>
-              {{ name }}
-            </div>
-          </li>
-        </ul>
+        <div :class="{ dark: $store.state.darkTheme }">
+          <h1 class="title">Yay {{ yay }}</h1>
+          <ul id="yayNames">
+            <li v-for="name in yayNames" :key="name.id">
+              <div v-if="name.displayName">@{{ name.displayName }}</div>
+              <div v-else>
+                {{ name }}
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div :class="{ dark: $store.state.darkTheme }">
+          <h1 class="title">Nay {{ nay }}</h1>
+          <ul id="yayNames">
+            <li v-for="name in nayNames" :key="name.id">
+              <div v-if="name.displayName">@{{ name.displayName }}</div>
+              <div v-else>
+                {{ name }}
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div :class="{ dark: $store.state.darkTheme }">
+          <h1 class="title">Abstain {{ abstain }}</h1>
+          <ul id="yayNames">
+            <li v-for="name in abstainNames" :key="name.id">
+              <div v-if="name.displayName">@{{ name.displayName }}</div>
+              <div v-else>
+                {{ name }}
+              </div>
+            </li>
+          </ul>
+        </div>
       </section>
     </div>
     <div class="shareLink">
-      <h1>Share this poll</h1>
+      <h2>Share this Poll</h2>
       <button type="button" v-clipboard:copy="toCopy" style="margin-top: 0px">
         Share Link
       </button>
@@ -143,10 +155,12 @@ export default {
       requireName: false,
       requirePassword: false,
       requireAdminPassword: false,
+      requireLoggedIn: false,
       questionText: "",
       yayNames: [],
       nayNames: [],
       abstainNames: [],
+      answeredUsers: [],
       hasVoted: false,
       showVoteOptions: false,
       name: "",
@@ -183,8 +197,11 @@ export default {
       responseQuery.equalTo("questionId", questionPointer);
       responseQuery.find().then((responses) => {
         for (const r of responses) {
+          if (r.get("user")) {
+            vm.answeredUsers.push(r.get("user"));
+          }
           const answer = r.get("response");
-          const rName = "bob";
+          let rName = r.get("name");
           if (answer == "yay") {
             vm.yayNames.push(rName);
             vm.yay += 1;
@@ -194,6 +211,14 @@ export default {
           } else if (answer == "abstain") {
             vm.abstainNames.push(rName);
             vm.abstain += 1;
+          }
+        }
+        const currentUser = AV.User.current();
+        if (currentUser) {
+          for (const user of vm.answeredUsers) {
+            if (user.get("objectId") == currentUser.get("objectId")) {
+              vm.validVoting = false;
+            }
           }
         }
       });
@@ -210,14 +235,15 @@ export default {
       const currentUser = AV.User.current();
       if (currentUser) {
         yayResponse.set("user", currentUser);
+        yayResponse.set("name", currentUser.get("fullName").split(" ")[0]);
       }
       yayResponse.set("response", "yay");
       yayResponse.save().then(
-        function () {
+        function() {
           vm.getVoteCount();
           vm.validVoting = false;
         },
-        function (error) {
+        function(error) {
           alert(error);
         }
       );
@@ -237,11 +263,11 @@ export default {
       }
       nayResponse.set("response", "nay");
       nayResponse.save().then(
-        function () {
+        function() {
           vm.getVoteCount();
           vm.validVoting = false;
         },
-        function (error) {
+        function(error) {
           alert(error);
         }
       );
@@ -261,11 +287,11 @@ export default {
       }
       abstainResponse.set("response", "abstain");
       abstainResponse.save().then(
-        function () {
+        function() {
           vm.getVoteCount();
           vm.validVoting = false;
         },
-        function (error) {
+        function(error) {
           alert(error);
         }
       );
@@ -273,10 +299,13 @@ export default {
     startVoting() {
       const vm = this;
       vm.showVotingOptions = true;
+      const currentUser = AV.User.current();
+      console.log("currentUser id = " + currentUser.objectId);
       if (
         vm.yayNames.includes(vm.name) == true ||
         vm.nayNames.includes(vm.name) == true ||
-        vm.abstainNames.includes(vm.name) == true
+        vm.abstainNames.includes(vm.name) == true ||
+        vm.answeredUsers.includes(AV.User.current().objectId)
       ) {
         vm.validVoting = false;
       }
@@ -322,7 +351,7 @@ export default {
       const vm = this;
       var questionQuery = new AV.Query("Question");
       questionQuery.get(vm.questionId).then(
-        function (question) {
+        function(question) {
           vm.questionText = question.get("question");
           vm.requireName = question.get("requireName");
           if (vm.requireName == true) {
@@ -332,6 +361,12 @@ export default {
           }
           vm.requirePassword = question.get("passwordProtected");
           vm.needPassword = vm.requirePassword;
+          vm.requireLoggedIn = question.get("requireLoggedIn");
+          const currentUser = AV.User.current();
+          if (currentUser == null && vm.requireLoggedIn == true) {
+            alert("YOU MUST BE LOGGED IN TO VOTE!");
+            vm.$router.push("/logIn");
+          }
           vm.requireAdminPassword = question.get("adminPasswordRequired");
           vm.password = question.get("password");
           vm.questionAdminPassword = question.get("adminPassword");
@@ -398,14 +433,36 @@ export default {
   background-color: lightgrey;
 }
 
+.dark {
+  /* background-color: #575555; */
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+  text-decoration-color: white;
+}
+
+.dark button {
+  color: white;
+  border: 1px solid white;
+}
+
+.dark h1 {
+  color: purple;
+  text-decoration-color: white;
+}
+
 button {
   width: 150px;
   height: 30px;
-  background-color: "#aaadb3";
   margin-top: 25px;
-  box-shadow: none;
   margin-left: 20px;
-  border-radius: 200px;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px #afe9ff;
+  outline: none;
+  -webkit-appearance: none;
+  background: none;
+  box-shadow: none;
 }
 
 .shareLink button {

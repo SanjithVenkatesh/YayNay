@@ -17,37 +17,52 @@
           light: $store.state.lightTheme,
         }"
       >
-        <div v-if="$store.state.logInState">
-          <li :class="[$store.state.openedTopNavItem === 'user' ? 'open' : '']">
-            <button class="welcome" @click="modifyOpened">
-              <h3>Welcome {{ $store.state.currentUser.fullName }}</h3>
-            </button>
-            <ul class="dialogue" v-if="$store.state.settingState">
-              <li>
-                <button @click="toProfilePage">
-                  <span>Profile</span>
-                </button>
-              </li>
-              <li>
-                <router-link :to="'/settings'">
-                  <span>Settings</span>
-                </router-link>
-              </li>
-              <li>
-                <button @click="logOut">
-                  <span>Log out</span>
-                </button>
-              </li>
-            </ul>
-          </li>
-        </div>
-        <div v-if="!$store.state.logInState">
-          <router-link :to="'/register'">
-            <span>Sign Up</span>
-          </router-link>
-          <router-link :to="'/login'">
-            <span>Log In</span>
-          </router-link>
+        <div class="topRight">
+          <toggle-button
+            :width="35"
+            :height="17"
+            :color="{
+              checked: '#9370DB',
+              unchecked: '#E6CCB3',
+              disabled: '#CCCCCC',
+            }"
+            style="margin-top: 15px;"
+            @change="themeSwitch"
+          />
+          <div v-if="$store.state.logInState">
+            <li
+              :class="[$store.state.openedTopNavItem === 'user' ? 'open' : '']"
+            >
+              <button class="welcome" @click="modifyOpened">
+                <h3>Welcome {{ $store.state.currentUser.fullName }}</h3>
+              </button>
+              <ul class="dialogue" v-if="$store.state.settingState">
+                <li>
+                  <button @click="toProfilePage">
+                    <span>Profile</span>
+                  </button>
+                </li>
+                <li>
+                  <router-link :to="'/settings'">
+                    <span>Settings</span>
+                  </router-link>
+                </li>
+                <li>
+                  <button @click="logOut">
+                    <span>Log out</span>
+                  </button>
+                </li>
+              </ul>
+            </li>
+          </div>
+          <div v-if="!$store.state.logInState">
+            <router-link :to="'/register'">
+              <span>Sign Up</span>
+            </router-link>
+            <router-link :to="'/login'">
+              <span>Log In</span>
+            </router-link>
+          </div>
         </div>
       </ul>
     </div>
@@ -65,10 +80,10 @@ export default {
     };
   },
   watch: {
-    lightTheme: function (newVal) {
+    lightTheme: function(newVal) {
       console.log("New lightTheme = " + newVal);
     },
-    darkTheme: function (newVal) {
+    darkTheme: function(newVal) {
       console.log("New darkTheme = " + newVal);
     },
   },
@@ -99,6 +114,14 @@ export default {
         vm.$store.commit("closeSettings");
       } else {
         vm.$store.commit("openSettings");
+      }
+    },
+    themeSwitch() {
+      const vm = this;
+      if (vm.$store.state.lightTheme) {
+        vm.$store.commit("setDarkTheme");
+      } else {
+        vm.$store.commit("setLightTheme");
       }
     },
     logOut() {
@@ -209,6 +232,14 @@ span {
 
 .light {
   background-color: whitesmoke;
+}
+
+.light span {
+  color: black;
+}
+
+.topRight{
+  display: flex;
 }
 
 a[href],

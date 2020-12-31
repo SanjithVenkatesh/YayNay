@@ -4,7 +4,7 @@
       <CreateQuestion></CreateQuestion>
     </div>
     <div>
-      <BercowQuote></BercowQuote>
+      <!-- <BercowQuote></BercowQuote> -->
     </div>
   </div>
 </template>
@@ -12,13 +12,13 @@
 <script>
 // import AV from "leancloud-storage";
 // import CreateNewOrganization from "@/components/CreateNewOrganization.vue";
-import BercowQuote from "@/components/BercowQuote.vue";
+// import BercowQuote from "@/components/BercowQuote.vue";
 import CreateQuestion from "../components/CreateQuestion.vue";
 import AV from "leancloud-storage";
 export default {
   name: "HomePage",
   components: {
-    BercowQuote,
+    // BercowQuote,
     CreateQuestion,
   },
   data() {

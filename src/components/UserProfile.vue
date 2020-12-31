@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{dark: $store.state.darkTheme, light: $store.state.lightTheme}">
     <h1>{{ fullName }}'s Profile</h1>
     <h3>Email: {{ email }}</h3>
     <h2>Questions Created</h2>
@@ -14,25 +14,10 @@
       </thead>
       <tbody>
         <tr v-for="question in questions" v-bind:key="question">
-          <td>{{ question.questionText }}</td>
+          <td><a :href="question.questionId">{{ question.questionText }}</a></td>
           <td>{{ question.yays }}</td>
           <td>{{ question.nays }}</td>
           <td>{{ question.abstains }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>Responses Provided</h2>
-    <table class="center">
-      <thead>
-        <tr>
-          <th>Question</th>
-          <th>Response</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="response in responses" v-bind:key="response">
-          <td>{{ response.questionText }}</td>
-          <td>{{ response.response }}</td>
         </tr>
       </tbody>
     </table>
@@ -113,6 +98,7 @@ export default {
                     yays: yays,
                     nays: nays,
                     abstains: abstains,
+                    questionId: "/" + question.get("objectId"),
                   };
                   vm.questions.push(questionResponse);
                 },
@@ -184,10 +170,18 @@ th {
   padding: 10px;
 }
 
+.dark table.center, tr, td, th {
+  border: 2px inset white;
+}
+
+.light table.center, tr, td, th{
+  border: 2px inset black;
+}
+
 table,
 th,
 td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-collapse: collapse;
   overflow-x: auto;
 }

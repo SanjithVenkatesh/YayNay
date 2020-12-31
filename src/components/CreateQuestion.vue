@@ -11,7 +11,7 @@
       <div class="passwordProtected">
         <p>
           Password Protected?
-          <input type="checkbox" v-model="password" />
+          <input type="checkbox" v-model="needPassword" />
         </p>
         <div v-if="password" class="addQuestion">
           <span>Enter Password</span>
@@ -19,6 +19,9 @@
             <input id="questionInput" v-model="qPassword" type="password" />
           </label>
         </div>
+      </div>
+      <div class = "requireLoggedIn">
+        <p>Require Logged In User? <input type="checkbox" v-model="requireLoggedIn" /></p>
       </div>
       <div class="requireName">
         <p>
@@ -48,11 +51,12 @@ export default {
   name: "CreateQuestion",
   data() {
     return {
-      question: "",
-      password: false,
+      questionText: "",
+      needPassword: false,
       qPassword: "",
       requireName: false,
       adminPassword: false,
+      requireLoggedIn: false,
       aPassword: "",
     };
   },
@@ -75,8 +79,9 @@ export default {
       newQuestion.set("requireName", vm.requireName);
       newQuestion.set("password", vm.qPassword);
       newQuestion.set("adminPassword", vm.aPassword);
-      newQuestion.set("passwordProtected", vm.password);
+      newQuestion.set("passwordProtected", vm.needPassword);
       newQuestion.set("adminPasswordRequired", vm.adminPassword);
+      newQuestion.set("requireLoggedIn", vm.requireLoggedIn);
       newQuestion.set("createdBy", AV.User.current());
       newQuestion.set("complete", false);
       newQuestion.save().then(
@@ -95,6 +100,7 @@ export default {
 <style scoped>
 * {
   text-align: center;
+  margin-top: 10px;
 }
 
 input#questionInput {
@@ -102,6 +108,10 @@ input#questionInput {
   height: 30px;
   margin: 10px;
   font-size: 18px;
+}
+
+.requireLoggedIn {
+  display:block;
 }
 
 .primary {

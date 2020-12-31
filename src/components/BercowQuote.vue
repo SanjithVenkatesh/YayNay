@@ -52,5 +52,6 @@ p {
   padding-top: 50px;
   padding-bottom: 10px; */
   text-align: center;
+  max-width: 100vh;
 }
 </style>

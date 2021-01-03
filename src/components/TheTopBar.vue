@@ -79,17 +79,8 @@ export default {
       fullName: "",
     };
   },
-  watch: {
-    lightTheme: function(newVal) {
-      console.log("New lightTheme = " + newVal);
-    },
-    darkTheme: function(newVal) {
-      console.log("New darkTheme = " + newVal);
-    },
-  },
   created() {
     const vm = this;
-    console.log("in top bar, lightTheme = " + vm.lightTheme);
     vm.$forceUpdate();
     vm.$store.commit("closeSettings");
     const currentUser = AV.User.current();
@@ -238,7 +229,7 @@ span {
   color: black;
 }
 
-.topRight{
+.topRight {
   display: flex;
 }
 

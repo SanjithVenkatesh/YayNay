@@ -300,12 +300,11 @@ export default {
       const vm = this;
       vm.showVotingOptions = true;
       const currentUser = AV.User.current();
-      console.log("currentUser id = " + currentUser.objectId);
       if (
         vm.yayNames.includes(vm.name) == true ||
         vm.nayNames.includes(vm.name) == true ||
         vm.abstainNames.includes(vm.name) == true ||
-        vm.answeredUsers.includes(AV.User.current().objectId)
+        vm.answeredUsers.includes(currentUser.objectId)
       ) {
         vm.validVoting = false;
       }

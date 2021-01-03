@@ -39,8 +39,6 @@ export default {
       } else {
         vm.$store.commit("setLightTheme");
       }
-
-      console.log("darkTheme = " + vm.pageBackground.darkTheme);
     },
   },
   created() {
@@ -79,13 +77,12 @@ export default {
   text-decoration-color: black;
 }
 
-html, body{
+html,
+body {
   height: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
-
-
 
 h1 {
   font-weight: 600;

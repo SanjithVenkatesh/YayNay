@@ -5,6 +5,7 @@
     </div>
     <div>
       <!-- <BercowQuote></BercowQuote> -->
+      <PopularQuestions></PopularQuestions>
     </div>
   </div>
 </template>
@@ -14,12 +15,14 @@
 // import CreateNewOrganization from "@/components/CreateNewOrganization.vue";
 // import BercowQuote from "@/components/BercowQuote.vue";
 import CreateQuestion from "../components/CreateQuestion.vue";
+import PopularQuestions from "../components/PopularQuestions.vue";
 import AV from "leancloud-storage";
 export default {
   name: "HomePage",
   components: {
     // BercowQuote,
     CreateQuestion,
+    PopularQuestions,
   },
   data() {
     return {

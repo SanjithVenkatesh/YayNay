@@ -40,7 +40,7 @@
           />
         </label>
       </div>
-      <button type="submit" class="primary">Add Question</button>
+      <button :class="{ dark: $store.state.darkTheme, light: $store.state.lightTheme }" type="submit" class="primary">Add Question</button>
     </form>
   </div>
 </template>
@@ -118,5 +118,23 @@ input#questionInput {
   width: 70px;
   height: 50px;
   margin-top: 25px;
+}
+
+button {
+  width: 150px;
+  height: 30px;
+  margin-top: 25px;
+  margin-left: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px #afe9ff;
+  outline: none;
+  -webkit-appearance: none;
+  background: none;
+  box-shadow: none;
+}
+
+.dark button{
+  border: 1px solid purple;
 }
 </style>

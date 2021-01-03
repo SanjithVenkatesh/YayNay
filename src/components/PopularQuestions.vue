@@ -68,14 +68,11 @@ export default {
     getQuestions() {
       const vm = this;
       for (const question of vm.sortCount) {
-        console.log(question[0]);
         const questionQuery = new AV.Query("Question");
         questionQuery.get(question[0]).then((q) => {
-          console.log(q);
           vm.questions.push([q.get("question"), question[0], question[1]]);
         });
       }
-      console.log(vm.questions);
     },
   },
 };

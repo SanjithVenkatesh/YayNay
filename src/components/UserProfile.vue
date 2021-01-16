@@ -1,5 +1,7 @@
 <template>
-  <div :class="{dark: $store.state.darkTheme, light: $store.state.lightTheme}">
+  <div
+    :class="{ dark: $store.state.darkTheme, light: $store.state.lightTheme }"
+  >
     <h1>{{ fullName }}'s Profile</h1>
     <h3>Email: {{ email }}</h3>
     <h2>Questions Created</h2>
@@ -14,7 +16,9 @@
       </thead>
       <tbody>
         <tr v-for="question in questions" v-bind:key="question">
-          <td><a :href="question.questionId">{{ question.questionText }}</a></td>
+          <td>
+            <a :href="question.questionId">{{ question.questionText }}</a>
+          </td>
           <td>{{ question.yays }}</td>
           <td>{{ question.nays }}</td>
           <td>{{ question.abstains }}</td>
@@ -170,11 +174,17 @@ th {
   padding: 10px;
 }
 
-.dark table.center, tr, td, th {
+.dark table.center,
+tr,
+td,
+th {
   border: 2px inset white;
 }
 
-.light table.center, tr, td, th{
+.light table.center,
+tr,
+td,
+th {
   border: 2px inset black;
 }
 

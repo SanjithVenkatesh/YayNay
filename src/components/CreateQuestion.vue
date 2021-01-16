@@ -20,8 +20,11 @@
           </label>
         </div>
       </div>
-      <div class = "requireLoggedIn">
-        <p>Require Logged In User? <input type="checkbox" v-model="requireLoggedIn" /></p>
+      <div class="requireLoggedIn">
+        <p>
+          Require Logged In User?
+          <input type="checkbox" v-model="requireLoggedIn" />
+        </p>
       </div>
       <div class="requireName">
         <p>
@@ -40,7 +43,16 @@
           />
         </label>
       </div>
-      <button :class="{ dark: $store.state.darkTheme, light: $store.state.lightTheme }" type="submit" class="primary">Add Question</button>
+      <button
+        :class="{
+          dark: $store.state.darkTheme,
+          light: $store.state.lightTheme,
+        }"
+        type="submit"
+        class="primary"
+      >
+        Add Question
+      </button>
     </form>
   </div>
 </template>
@@ -85,10 +97,10 @@ export default {
       newQuestion.set("createdBy", AV.User.current());
       newQuestion.set("complete", false);
       newQuestion.save().then(
-        function (newQuestion) {
+        function(newQuestion) {
           vm.$router.push("/" + newQuestion.id);
         },
-        function (error) {
+        function(error) {
           alert(error);
         }
       );
@@ -111,7 +123,7 @@ input#questionInput {
 }
 
 .requireLoggedIn {
-  display:block;
+  display: block;
 }
 
 .primary {
@@ -134,7 +146,7 @@ button {
   box-shadow: none;
 }
 
-.dark button{
+.dark button {
   border: 1px solid purple;
 }
 </style>

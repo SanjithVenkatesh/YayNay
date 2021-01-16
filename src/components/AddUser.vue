@@ -44,7 +44,7 @@ export default {
       newUser.setEmail(vm.newUser.email);
       newUser.set("fullName", vm.newUser.name);
       newUser.signUp().then(
-        function () {
+        function() {
           alert("User has been created with the email: " + vm.newUser.email);
           AV.User.logIn(vm.newUser.email, vm.newUser.password).then(
             (loggedInUser) => {
@@ -76,7 +76,7 @@ export default {
             }
           );
         },
-        function (error) {
+        function(error) {
           if (error.code === 125) {
             alert(
               "The email address you entered is not a valid one. Please check your input."

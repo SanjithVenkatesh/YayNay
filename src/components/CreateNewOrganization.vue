@@ -29,10 +29,10 @@ export default {
       newOrg.set("name", vm.newOrganizationName);
       newOrg.set("createdBy", AV.User.current());
       newOrg.save().then(
-        function () {
+        function() {
           vm.callback();
         },
-        function (error) {
+        function(error) {
           alert(error);
         }
       );
